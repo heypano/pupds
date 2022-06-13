@@ -1,10 +1,6 @@
 import React from "react";
 
-export interface BluttonProps {
-    label: string;
-}
-
-const Blutton = (props: BluttonProps) => {
+const Blutton = (props) => {
     return <button>{props.label}</button>;
 };
 

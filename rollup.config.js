@@ -1,34 +1,20 @@
 import resolve from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
-import typescript from "@rollup/plugin-typescript";
-import dts from "rollup-plugin-dts";
+import babel from "@rollup/plugin-babel";
 
-const packageJson = require("./package.json");
-
-export default [
-    {
-        input: "src/index.ts",
-        output: [
-            {
-                file: packageJson.main,
-                format: "cjs",
-                sourcemap: true,
-            },
-            {
-                file: packageJson.module,
-                format: "esm",
-                sourcemap: true,
-            },
-        ],
-        plugins: [
-            resolve(),
-            commonjs(),
-            typescript({ tsconfig: "./tsconfig.json" }),
-        ],
+export default {
+    input: 'src/index.js',
+    output: {
+        file: 'dist/index.js',
+        format: 'esm'
     },
-    {
-        input: "dist/esm/types/index.d.ts",
-        output: [{ file: "dist/index.d.ts", format: "esm" }],
-        plugins: [dts()],
-    },
-];
+    plugins: [
+        resolve({
+            extensions: [".js"],
+        }), // for importing modules installed with NPM.
+        babel({
+            presets: ["@babel/preset-react"],
+        }), // for transpiling JSX code into valid JavaScript code.
+        commonjs(), //  so that Rollup can import code in CommonJS module format.
+    ],
+};
