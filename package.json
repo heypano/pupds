@@ -1,29 +1,44 @@
 {
   "name": "@heypano/pupds",
   "license": "ISC",
-  "version": "0.0.27",
+  "version": "0.0.31",
   "description": "Pano Papadatos' Component Library",
   "scripts": {
-    "rollup": "rollup -c"
+    "rollup": "rollup -c",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "author": "Pano Papadatos",
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^22.0.0",
+    "@babel/core": "^7.18.5",
+    "@rollup/plugin-babel": "^5.3.1",
     "@rollup/plugin-node-resolve": "^13.3.0",
-    "@rollup/plugin-typescript": "^8.3.2",
-    "@types/react": "^18.0.11",
-    "react": "^18.1.0",
-    "rollup": "^2.75.5",
-    "rollup-plugin-dts": "^4.2.2",
-    "tslib": "^2.4.0",
+    "@storybook/addon-actions": "^6.5.9",
+    "@storybook/addon-essentials": "^6.5.9",
+    "@storybook/addon-interactions": "^6.5.9",
+    "@storybook/addon-links": "^6.5.9",
+    "@storybook/builder-webpack4": "^6.5.9",
+    "@storybook/manager-webpack4": "^6.5.9",
+    "@storybook/react": "^6.5.9",
+    "@storybook/testing-library": "^0.0.13",
+    "@types/react": "^18.0.12",
+    "babel-loader": "^8.2.5",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "rollup": "^2.75.6",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-postcss": "^4.0.2",
+    "rollup-plugin-typescript2": "^0.32.1",
     "typescript": "^4.7.3"
   },
-  "main": "dist/cjs/index.js",
-  "module": "dist/esm/index.js",
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
   "files": [
     "dist"
   ],
-  "types": "dist/index.d.ts",
+  "main": "dist/index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/heypano/pupds.git"
