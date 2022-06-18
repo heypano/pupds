@@ -1,4 +1,11 @@
-import { useCallback, useReducer } from "react";
+import {
+  Ref,
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useReducer,
+  useState,
+} from "react";
 
 export type Point = {
   x: number;
@@ -32,11 +39,17 @@ function cursorReducer(state: State, { type, payload }: Action) {
   }
 }
 
-export function useCursor() {
+export function useCursor(node?: HTMLOrSVGElement) {
   const [state, pointsDispatch] = useReducer(cursorReducer, initialState);
+  const [isDrawing, setIsDrawing] = useState(false);
+  useLayoutEffect(() => {
+    console.log("A", node);
+  }, []);
   const addPoint = useCallback((point: Point) => {
     const action: Action = { type: "addPoint", payload: point };
     pointsDispatch(action);
   }, []);
+
+  useEffect(() => {});
   return { points: state.points, addPoint };
 }

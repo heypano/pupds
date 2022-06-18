@@ -1,4 +1,4 @@
-import React, { useMemo, useRef } from "react";
+import React, { Ref, useLayoutEffect, useMemo, useRef } from "react";
 import { Point, useCursor } from "./UseCursor";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
@@ -43,11 +43,11 @@ const getPathFromPoints = (points: Array<Point>) => {
 };
 
 function Scratch(props: ScratchProps) {
-  const { label } = props;
-  const { points, addPoint } = useCursor();
   const maskId = useMemo(() => uuidv4(), []);
+  const svgRef = useRef<SVGElement>();
+  const { points, addPoint } = useCursor(svgRef.current);
   const path = useMemo(() => getPathFromPoints(points), [points]);
-  const svgRef = useRef();
+
   return (
     <div>
       <pre>{JSON.stringify(points, null, 2)}</pre>
@@ -59,7 +59,7 @@ function Scratch(props: ScratchProps) {
         add
       </button>
       <SvgContainer>
-        <StSvg viewBox={`0 0 1600 1600`} id="Layer_1">
+        <svg viewBox={`0 0 1600 1600`} id="Layer_1" ref={svgRef}>
           <defs>
             <radialGradient
               id="GradientReflect"
@@ -74,7 +74,7 @@ function Scratch(props: ScratchProps) {
               <stop offset="100%" stopColor="forestgreen" />
             </radialGradient>
           </defs>
-        </StSvg>
+        </svg>
         <clipPath id={maskId}>
           <g clipPath={`url(#${maskId})`}>
             <path
