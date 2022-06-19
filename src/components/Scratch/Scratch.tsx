@@ -1,7 +1,8 @@
-import React, { Ref, useLayoutEffect, useMemo, useRef } from "react";
+import React, { Ref, useEffect, useLayoutEffect, useMemo, useRef } from "react";
 import { Point, useCursor } from "./UseCursor";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
+import MaskPaths from "./MaskPaths";
 
 const strokeWidth = 60;
 
@@ -44,49 +45,45 @@ const getPathFromPoints = (points: Array<Point>) => {
 
 function Scratch(props: ScratchProps) {
   const maskId = useMemo(() => uuidv4(), []);
-  const svgRef = useRef<SVGElement>();
-  const { points, addPoint } = useCursor(svgRef.current);
+  const { points, ref } = useCursor();
   const path = useMemo(() => getPathFromPoints(points), [points]);
 
+  // @ts-ignore
   return (
-    <div>
-      <pre>{JSON.stringify(points, null, 2)}</pre>
-      <button
-        onClick={() => {
-          addPoint({ x: 1, y: 2 });
-        }}
+    <SvgContainer>
+      <StSvg
+        viewBox={`0 0 1600 1600`}
+        id="Layer_1"
+        ref={ref as Ref<SVGSVGElement>}
       >
-        add
-      </button>
-      <SvgContainer>
-        <svg viewBox={`0 0 1600 1600`} id="Layer_1" ref={svgRef}>
-          <defs>
-            <radialGradient
-              id="GradientReflect"
-              cx="0.5"
-              cy="0.5"
-              r="0.4"
-              fx="0.75"
-              fy="0.75"
-              spreadMethod="reflect"
-            >
-              <stop offset="0%" stopColor="hotpink" />
-              <stop offset="100%" stopColor="forestgreen" />
-            </radialGradient>
-          </defs>
-        </svg>
+        <defs>
+          <radialGradient
+            id="GradientReflect"
+            cx="0.5"
+            cy="0.5"
+            r="0.4"
+            fx="0.75"
+            fy="0.75"
+            spreadMethod="reflect"
+          >
+            <stop offset="0%" stopColor="hotpink" />
+            <stop offset="100%" stopColor="forestgreen" />
+          </radialGradient>
+        </defs>
         <clipPath id={maskId}>
-          <g clipPath={`url(#${maskId})`}>
-            <path
-              d={path}
-              strokeWidth={strokeWidth}
-              fill="transparent"
-              stroke="grey"
-            />
-          </g>
+          <MaskPaths />
         </clipPath>
-      </SvgContainer>
-    </div>
+
+        <g clipPath={`url(#${maskId})`}>
+          <path
+            d={path}
+            strokeWidth={strokeWidth}
+            fill="transparent"
+            stroke="grey"
+          />
+        </g>
+      </StSvg>
+    </SvgContainer>
   );
 }
 

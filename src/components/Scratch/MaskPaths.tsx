@@ -22,7 +22,11 @@ const Gem = () => (
 );
 
 const MaskPaths = () => {
-  return [<Eye key="eye" />, <Kiss key="kiss" />, <Gem key="gem" />];
+  return (
+    <>
+      <Eye />, <Kiss />, <Gem />
+    </>
+  );
 };
 
 export default MaskPaths;
