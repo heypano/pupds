@@ -8,6 +8,7 @@ const strokeWidth = 60;
 export interface ScratchProps {
   text?: string;
   drawText?: boolean;
+  showClearButton?: boolean;
 }
 
 const SvgContainer = styled.section`
@@ -19,6 +20,14 @@ const StSvg = styled.svg`
   width: 100%;
   height: 100%;
   user-select: none;
+`;
+
+const StButton = styled.span`
+  color: hsla(150 80% 40% / 1);
+  cursor: pointer;
+  &:hover {
+    color: hsla(150 80% 40% / 0.7);
+  }
 `;
 
 const getPathFromPoints = (points: Array<Point>) => {
@@ -43,10 +52,10 @@ const getPathFromPoints = (points: Array<Point>) => {
 };
 
 function Scratch(props: ScratchProps) {
-  const { text = "Hey there howi", drawText } = props;
+  const { text = "", drawText, showClearButton } = props;
   const maskId = useMemo(() => uuidv4(), []);
   const pathId = useMemo(() => uuidv4(), []);
-  const { points, ref } = useCursor();
+  const { points, ref, clearPoints } = useCursor();
   const path = useMemo(() => getPathFromPoints(points), [points]);
 
   console.log(
@@ -66,6 +75,16 @@ function Scratch(props: ScratchProps) {
 
   return (
     <SvgContainer>
+      {showClearButton && (
+        <StButton
+          role="button"
+          onClick={() => {
+            clearPoints();
+          }}
+        >
+          Clear
+        </StButton>
+      )}
       <StSvg viewBox={`0 0 1600 1600`} ref={ref as Ref<SVGSVGElement>}>
         <clipPath id={maskId}>
           <text
@@ -110,8 +129,9 @@ function Scratch(props: ScratchProps) {
 }
 
 Scratch.defaultProps = {
-  text: "Fight own tail roll over and sun my belly chase after silly colored fish toys around the house and scratch at door to be let outside, get let out then scratch at door immmediately after to be let back in so spill litter box, scratch at owner, destroy all furniture, especially couch. Purr as loud as possible, be the most annoying cat that you can, and, knock everything off the table stare out the window freak human out make funny noise mow mow mow mow mow mow success now attack human yet climb into cupboard and lick the salt off rice cakes yet purrr purr littel cat, little cat purr purr so miaow then turn around and show you my bum i want to go outside let me go outside nevermind inside is better. What the heck just happened, something feels fishy give attitude. Is good you understand your place in my world always ensure to lay down in such a manner that tail can lightly brush human's nose , pose purrfectly to show my beauty. Catch mouse and gave it as a present scratch the box, jump launch to pounce upon little yarn mouse, bare fangs at toy run hide in litter box until treats are fed. Russian blue roll over and sun my belly. Jump on human and sleep on her all night long be long in the bed, purr in the morning and then give a bite to every human around for not waking up request food, purr loud scratch the walls, the floor, the windows, the humans ignore the human until she needs to get up, then climb on her lap and sprawl, purr like an angel yet sleeps on my head hell is other people.",
+  text: "Έφτιαξα αυτό το πράγμα που σε αφήνει να κρύψεις κείμενο και να το ξύσεις αλλά επίσης σε αφήνει να το ζωγραφίσεις σε διάφορα σχήματα. ♡",
   drawText: false,
+  showClearButton: false,
 };
 
 export default Scratch;

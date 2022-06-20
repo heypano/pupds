@@ -20,9 +20,12 @@ const Template: ComponentStory<typeof Scratch> = (args) => (
 
 export const RegularText = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
-RegularText.args = {};
+RegularText.args = {
+  showClearButton: true,
+};
 
 export const DrawText = Template.bind({});
 DrawText.args = {
   drawText: true,
+  showClearButton: true,
 };
