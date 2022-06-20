@@ -48,7 +48,6 @@ function Scratch(props: ScratchProps) {
   const { points, ref } = useCursor();
   const path = useMemo(() => getPathFromPoints(points), [points]);
 
-  // @ts-ignore
   return (
     <SvgContainer>
       <StSvg

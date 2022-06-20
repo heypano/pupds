@@ -57,10 +57,11 @@ function getPointInSvg(svg: SVGSVGElement, otherX: number, otherY: number) {
   return [x, y];
 }
 
-export function useCursor() {
+export function useCursor(threshold: number = 25) {
   const [state, pointsDispatch] = useReducer(cursorReducer, initialState);
   const isDrawingRef = useRef<boolean>();
-  const ref = useRef<SVGSVGElement>();
+  const nodeRef = useRef<SVGSVGElement>();
+  const timeRef = useRef<number>(0);
   const addPoint = useCallback((point: Point) => {
     const action: Action = { type: "addPoint", payload: point };
     pointsDispatch(action);
@@ -81,37 +82,47 @@ export function useCursor() {
   };
 
   function draw(e: MouseOrTouchEvent, options: DrawOptions = {}) {
-    const node = ref?.current;
+    const node = nodeRef?.current;
     const isDrawing = isDrawingRef.current;
+    const lastTimeDrawn = timeRef.current;
     const { type } = options;
-    if (node) {
+    const now = Date.now();
+    const msSinceLastTime = now - lastTimeDrawn;
+    if (node && msSinceLastTime > threshold) {
       const [x, y] = getPointInSvgFromEvent(node, e);
       if (isDrawing) {
         addPoint({ x, y, type });
+        timeRef.current = Date.now();
       }
     }
   }
 
   useEffect(() => {
-    const node = ref?.current;
+    const node = nodeRef?.current;
+    const listeners = new Map<keyof SVGSVGElementEventMap, EventListener>([
+      ["touchstart", startDrawing as EventListener],
+      ["mousedown", startDrawing as EventListener],
+      ["mouseup", stopDrawing as EventListener],
+      ["mousemove", draw as EventListener],
+      ["touchmove", draw as EventListener],
+    ]);
+
     if (node) {
-      node.addEventListener("touchstart", startDrawing);
-      node.addEventListener("mousedown", startDrawing);
-      node.addEventListener("mouseup", stopDrawing); // touchend not needed
-      node.addEventListener("mousemove", draw);
-      node.addEventListener("touchmove", draw);
+      for (const entry of listeners.entries()) {
+        const [type, method] = entry;
+        node.addEventListener(type, method);
+      }
     }
 
     return () => {
       if (node) {
-        node.removeEventListener("touchstart", startDrawing);
-        node.removeEventListener("mousedown", startDrawing);
-        node.removeEventListener("mouseup", stopDrawing);
-        node.removeEventListener("mousemove", draw);
-        node.removeEventListener("touchmove", draw);
+        for (const entry of listeners.entries()) {
+          const [type, method] = entry;
+          node.removeEventListener(type, method);
+        }
       }
     };
   }, []);
 
-  return { points: state.points, addPoint, ref };
+  return { points: state.points, addPoint, ref: nodeRef };
 }
