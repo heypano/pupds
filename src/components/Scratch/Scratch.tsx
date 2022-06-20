@@ -1,7 +1,8 @@
 import React, { Ref, useMemo } from "react";
-import { Point, useCursor } from "./UseCursor";
+import { useCursor } from "./UseCursor";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
+import { getPathFromPoints } from "../../util/svg";
 
 const strokeWidth = 60;
 
@@ -29,27 +30,6 @@ const StButton = styled.span`
     color: hsla(150 80% 40% / 0.7);
   }
 `;
-
-const getPathFromPoints = (points: Array<Point>) => {
-  return points.reduce((path, point, index) => {
-    const { x, y } = point;
-    const isNotFirstPoint = index > 0;
-    const previousPoint = isNotFirstPoint
-      ? points[index - 1]
-      : { x: null, y: null, type: null };
-    const { x: x0, y: y0, type: lastType } = previousPoint;
-    const needToOpen = index === 0 || lastType === "Z";
-    const isSameAsLast = x0 === x && y0 === y;
-
-    if (needToOpen) {
-      return `${path} M ${x} ${y}`;
-    } else if (isSameAsLast) {
-      return `${path} L ${x + 5} ${y0 + 5}`;
-    } else {
-      return `${path} L ${x} ${y}`;
-    }
-  }, "");
-};
 
 function Scratch(props: ScratchProps) {
   const { text = "", drawText, showClearButton } = props;
