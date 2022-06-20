@@ -1,13 +1,4 @@
-import {
-  Ref,
-  SyntheticEvent,
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useReducer,
-  useRef,
-  useState,
-} from "react";
+import { useCallback, useEffect, useReducer, useRef } from "react";
 
 export type Point = {
   x: number;
@@ -20,6 +11,8 @@ export type Payload = Point;
 export type State = {
   points: Array<Point>;
 };
+
+export type MouseOrTouchEvent = TouchEvent | MouseEvent;
 
 const initialState = {
   points: [],
@@ -34,17 +27,14 @@ export type Action = {
 function cursorReducer(state: State, { type, payload }: Action) {
   switch (type) {
     case "addPoint":
-      const { x, y } = payload;
-      return { ...state, points: [...state.points, { x, y }] };
+      const { x, y, type } = payload;
+      return { ...state, points: [...state.points, { x, y, type }] };
     default:
       throw new Error("don't know");
   }
 }
 
-function getPointInSvgFromEvent(
-  svg: SVGSVGElement,
-  event: TouchEvent | MouseEvent
-) {
+function getPointInSvgFromEvent(svg: SVGSVGElement, event: MouseOrTouchEvent) {
   let x: number;
   let y: number;
   if (event instanceof TouchEvent) {
@@ -76,23 +66,28 @@ export function useCursor() {
     pointsDispatch(action);
   }, []);
 
-  function startDrawing() {
+  function startDrawing(e: MouseOrTouchEvent) {
     isDrawingRef.current = true;
+    draw(e);
   }
 
-  function stopDrawing() {
+  function stopDrawing(e: MouseOrTouchEvent) {
+    draw(e, { type: "Z" });
     isDrawingRef.current = false;
   }
 
-  function draw(e: TouchEvent | MouseEvent) {
+  type DrawOptions = {
+    type?: string;
+  };
+
+  function draw(e: MouseOrTouchEvent, options: DrawOptions = {}) {
     const node = ref?.current;
+    const isDrawing = isDrawingRef.current;
+    const { type } = options;
     if (node) {
       const [x, y] = getPointInSvgFromEvent(node, e);
-      if (isDrawingRef.current) {
-        console.log("adding", { x, y });
-        addPoint({ x, y });
-      } else {
-        console.log("not adding, ", { x, y });
+      if (isDrawing) {
+        addPoint({ x, y, type });
       }
     }
   }
