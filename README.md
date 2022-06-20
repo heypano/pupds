@@ -4,3 +4,14 @@
 - https://javascript.plainenglish.io/how-to-create-your-own-react-component-library-e305a1a53b49
 - https://blog.harveydelaney.com/creating-your-own-react-component-library/
 - https://github.com/styled-components/styled-components/issues/373
+
+
+
+# SVG
+
+- https://stackoverflow.com/questions/4991171/auto-line-wrapping-in-svg-text
+- https://stackoverflow.com/questions/16701522/how-to-linebreak-an-svg-text-within-javascript
+
+# Cat Ipsum
+
+- http://www.catipsum.com/index.php

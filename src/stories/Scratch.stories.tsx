@@ -18,13 +18,11 @@ const Template: ComponentStory<typeof Scratch> = (args) => (
   <Scratch {...args} />
 );
 
-export const Fluid = Template.bind({});
+export const RegularText = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
-Fluid.args = {
-  fluid: true,
-};
+RegularText.args = {};
 
-export const NotFluid = Template.bind({});
-NotFluid.args = {
-  fluid: false,
+export const DrawText = Template.bind({});
+DrawText.args = {
+  drawText: true,
 };
