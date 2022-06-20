@@ -38,21 +38,6 @@ function Scratch(props: ScratchProps) {
   const { points, ref, clearPoints } = useCursor();
   const path = useMemo(() => getPathFromPoints(points), [points]);
 
-  console.log(
-    text
-      .split("")
-      .reduce<Array<Array<string>>>(
-        (acc: Array<Array<string>>, char: string, index) => {
-          if (index % 20 === 0) {
-            return [...acc, [char]];
-          }
-          acc[acc.length - 1].push(char);
-          return acc;
-        },
-        []
-      )
-  );
-
   return (
     <SvgContainer>
       {showClearButton && (
