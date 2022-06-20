@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useReducer, useRef } from "react";
-import { getPointInSvgFromEvent } from "./Point";
+import { getPointInSvgFromEvent } from "../../util/svg";
 
 export type Point = {
   x: number;
