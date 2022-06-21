@@ -24,7 +24,7 @@ jobs:
       - checkout
       - run:
           name: "Build Storybook"
-          command: "yarn build-storybook"
+          command: "npm run build-storybook"
       - aws-s3/sync:
           arguments: |
             --delete
