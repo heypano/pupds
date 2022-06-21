@@ -23,6 +23,9 @@ jobs:
     steps:
       - checkout
       - run:
+          name: "Install Dependencies"
+          command: "npm install"
+      - run:
           name: "Build Storybook"
           command: "npm run build-storybook"
       - aws-s3/sync:
