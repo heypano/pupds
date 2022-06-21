@@ -43,4 +43,5 @@ workflows:
       - build-project
           filters:
             branches:
-              only: main # Only deploy when the commit is on the Main branch
+              only:
+                - main # Only deploy when the commit is on the Main branch
