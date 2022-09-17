@@ -7,7 +7,9 @@
     "rollup": "rollup -c",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "deploy-storybook": "aws s3 sync --delete storybook-static/ s3://design.pup.codes"
+    "deploy-storybook": "aws s3 sync --delete storybook-static/ s3://design.pup.codes",
+    "lint": "eslint src --ext .tsx,.ts",
+    "lint-fix": "eslint src --ext .tsx,.ts --fix"
   },
   "author": "Pano Papadatos",
   "devDependencies": {
@@ -26,7 +28,14 @@
     "@types/styled-components": "^5.1.25",
     "@types/throttle-debounce": "^5.0.0",
     "@types/uuid": "^8.3.4",
+    "@typescript-eslint/eslint-plugin": "^5.37.0",
+    "@typescript-eslint/parser": "^5.37.0",
     "babel-loader": "^8.2.5",
+    "eslint": "8.22.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "prettier": "^2.7.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "rollup": "^2.75.6",

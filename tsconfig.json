@@ -15,5 +15,8 @@
   },
   "include": [
     "stories","src"
-  ]
+  ],
+  "plugins": [
+    "react-hooks"
+  ],
 }

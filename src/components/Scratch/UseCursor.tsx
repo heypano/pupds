@@ -40,11 +40,12 @@ function cursorReducer(
   }
 }
 
-export function useCursor(threshold: number = 25) {
+export function useCursor(threshold = 25) {
   const [state, pointsDispatch] = useReducer(cursorReducer, initialState);
   const isDrawingRef = useRef<boolean>();
   const nodeRef = useRef<SVGSVGElement>();
   const timeRef = useRef<number>(0);
+
   const addPoint = useCallback((point: Point) => {
     const action: Action = { type: "addPoint", payload: point };
     pointsDispatch(action);
@@ -55,35 +56,44 @@ export function useCursor(threshold: number = 25) {
     pointsDispatch(action);
   }, []);
 
-  function startDrawing(e: MouseOrTouchEvent) {
-    isDrawingRef.current = true;
-    draw(e);
-  }
-
-  function stopDrawing(e: MouseOrTouchEvent) {
-    draw(e, { type: "Z" });
-    isDrawingRef.current = false;
-  }
-
   type DrawOptions = {
     type?: string;
   };
 
-  function draw(e: MouseOrTouchEvent, options: DrawOptions = {}) {
-    const node = nodeRef?.current;
-    const isDrawing = isDrawingRef.current;
-    const lastTimeDrawn = timeRef.current;
-    const { type } = options;
-    const now = Date.now();
-    const msSinceLastTime = now - lastTimeDrawn;
-    if (node && msSinceLastTime > threshold) {
-      const [x, y] = getPointInSvgFromEvent(node, e);
-      if (isDrawing) {
-        addPoint({ x, y, type });
-        timeRef.current = Date.now();
+  const draw = useCallback(
+    (e: MouseOrTouchEvent, options: DrawOptions = {}) => {
+      const node = nodeRef?.current;
+      const isDrawing = isDrawingRef.current;
+      const lastTimeDrawn = timeRef.current;
+      const { type } = options;
+      const now = Date.now();
+      const msSinceLastTime = now - lastTimeDrawn;
+      if (node && msSinceLastTime > threshold) {
+        const [x, y] = getPointInSvgFromEvent(node, e);
+        if (isDrawing) {
+          addPoint({ x, y, type });
+          timeRef.current = Date.now();
+        }
       }
-    }
-  }
+    },
+    [addPoint, threshold]
+  );
+
+  const startDrawing = useCallback(
+    (e: MouseOrTouchEvent) => {
+      isDrawingRef.current = true;
+      draw(e);
+    },
+    [draw]
+  );
+
+  const stopDrawing = useCallback(
+    (e: MouseOrTouchEvent) => {
+      draw(e, { type: "Z" });
+      isDrawingRef.current = false;
+    },
+    [draw]
+  );
 
   useEffect(() => {
     const node = nodeRef?.current;
@@ -110,7 +120,7 @@ export function useCursor(threshold: number = 25) {
         }
       }
     };
-  }, []);
+  }, [draw, startDrawing, stopDrawing]);
 
   return { points: state.points, addPoint, ref: nodeRef, clearPoints };
 }
