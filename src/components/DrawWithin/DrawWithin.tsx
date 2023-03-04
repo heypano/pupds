@@ -28,17 +28,22 @@ function DrawWithin(props: DrawWithinProps) {
   } = props;
   const clipPathId = useMemo(() => uuid(), []);
   const pathId = useMemo(() => uuid(), []);
-  const { points, ref } = useCursor();
-  const path = useMemo(() => getPathFromPoints(points), [points]);
+  const { paths, ref } = useCursor({ generateMultiplePaths: true });
+  const allPaths = useMemo(
+    () => paths.map(({ points }) => getPathFromPoints(points), [paths]),
+    [paths]
+  );
   return (
     <svg viewBox={viewBox} ref={ref}>
       <g clipPath={`url(#${clipPathId})`} width="100%" height="100%">
-        <StPath
-          d={path}
-          id={pathId}
-          strokeWidth={strokeWidth}
-          stroke={strokeColor}
-        />
+        {allPaths.map((path, index) => (
+          <StPath
+            d={path}
+            id={`${pathId}_${index}`}
+            strokeWidth={strokeWidth}
+            stroke={strokeColor}
+          />
+        ))}
       </g>
       {ImagePaths}
       <clipPath id={clipPathId}>{MaskPaths}</clipPath>

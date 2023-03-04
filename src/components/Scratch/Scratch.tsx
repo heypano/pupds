@@ -35,8 +35,10 @@ function Scratch(props: ScratchProps) {
   const { text = "", drawText, showClearButton } = props;
   const maskId = useMemo(() => uuidv4(), []);
   const pathId = useMemo(() => uuidv4(), []);
-  const { points, ref, clearPoints } = useCursor();
-  const path = useMemo(() => getPathFromPoints(points), [points]);
+  const { paths, ref, clearPoints } = useCursor();
+  const allPaths = useMemo(() => {
+    return paths.map(({ points }) => getPathFromPoints(points));
+  }, [paths]);
 
   return (
     <SvgContainer>
@@ -80,13 +82,16 @@ function Scratch(props: ScratchProps) {
         </clipPath>
 
         <g clipPath={`url(#${maskId})`}>
-          <path
-            d={path}
-            id={pathId}
-            strokeWidth={strokeWidth}
-            fill="transparent"
-            stroke="grey"
-          />
+          {allPaths.map((path, index) => (
+            <path
+              key={index}
+              d={path}
+              id={`${pathId}_${index}`}
+              strokeWidth={strokeWidth}
+              fill="transparent"
+              stroke="grey"
+            />
+          ))}
         </g>
       </StSvg>
     </SvgContainer>
