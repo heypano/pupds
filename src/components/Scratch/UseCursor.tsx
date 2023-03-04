@@ -47,7 +47,7 @@ function cursorReducer(
 export function useCursor(threshold = 25) {
   const [state, pointsDispatch] = useReducer(cursorReducer, initialState);
   const isDrawingRef = useRef<boolean>();
-  const nodeRef = useRef<SVGSVGElement>();
+  const nodeRef = useRef<SVGSVGElement>(null);
   const timeRef = useRef<number>(0);
 
   const addPoint = useCallback((point: Point) => {
@@ -82,14 +82,14 @@ export function useCursor(threshold = 25) {
   const startDrawing = useCallback(
     (e: MouseOrTouchEvent) => {
       isDrawingRef.current = true;
-      draw(e);
+      draw(e, { type: "M" });
     },
     [draw]
   );
 
   const stopDrawing = useCallback(
     (e: MouseOrTouchEvent) => {
-      draw(e, { type: "Z" });
+      draw(e);
       isDrawingRef.current = false;
     },
     [draw]
@@ -101,6 +101,7 @@ export function useCursor(threshold = 25) {
       ["touchstart", startDrawing as EventListener],
       ["mousedown", startDrawing as EventListener],
       ["mouseup", stopDrawing as EventListener],
+      ["touchend", stopDrawing as EventListener],
       ["mousemove", draw as EventListener],
       ["touchmove", draw as EventListener],
     ]);

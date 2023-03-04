@@ -1,21 +1,21 @@
 import React from "react";
-import { ComponentStory, ComponentMeta } from "@storybook/react";
+import { ComponentMeta, ComponentStory } from "@storybook/react";
 
-import { DrawWithin } from "../components";
+import CatStory from "./CatStory";
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: "DrawWithin sample story",
-  component: DrawWithin,
+  component: CatStory,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   // argTypes: {
   //   backgroundColor: { control: 'color' },
   // },
-} as ComponentMeta<typeof DrawWithin>;
+} as ComponentMeta<typeof CatStory>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof DrawWithin> = (args) => (
-  <DrawWithin {...args} />
+const Template: ComponentStory<typeof CatStory> = (args) => (
+  <CatStory {...args} />
 );
 
 export const Cat = Template.bind({});
