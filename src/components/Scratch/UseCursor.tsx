@@ -9,11 +9,16 @@ export type Point = {
 
 export type Path = {
   points: Array<Point>;
+  options?: PathOptions;
 };
 
-export type Payload = Point;
+export type Payload = any;
 
 export type MouseOrTouchEvent = TouchEvent | MouseEvent;
+
+export interface PathOptions {
+  strokeColor?: string;
+}
 
 export type Action = {
   type: string;
@@ -30,28 +35,30 @@ export type DrawOptions = {
 
 const initialState = {
   paths: [],
-  testProp: 5,
 };
 
 function cursorReducer(
   state: State,
-  { type, payload = {} as Payload }: Action
+  { type: actionType, payload = {} as Payload }: Action
 ) {
-  switch (type) {
+  const { x, y, type: pointType, pathOptions } = payload;
+  switch (actionType) {
     case "addPath":
       return {
         ...state,
-        paths: [...state.paths, { points: [] }],
+        paths: [...state.paths, { points: [], pathOptions }],
       };
     case "addPoint":
-      const { x, y, type } = payload;
-      const lastPath = state.paths[state.paths.length - 1] || { points: [] };
+      const lastPath = state.paths[state.paths.length - 1];
       const allButLast = state.paths.slice(0, state.paths.length - 1);
       return {
         ...state,
         paths: [
           ...allButLast,
-          { ...lastPath, points: [...lastPath.points, { x, y, type }] },
+          {
+            ...lastPath,
+            points: [...lastPath.points, { x, y, type: pointType }],
+          },
         ],
       };
     case "clearPoints":
@@ -64,16 +71,22 @@ function cursorReducer(
 interface useCursorArgs {
   threshold?: number;
   generateMultiplePaths?: boolean;
+  pathOptions?: PathOptions;
 }
 export function useCursor(args: useCursorArgs = {}) {
-  const { threshold = 25, generateMultiplePaths } = args;
+  const { threshold = 25, generateMultiplePaths, pathOptions } = args;
   const [state, pointsDispatch] = useReducer(cursorReducer, initialState);
   const isDrawingRef = useRef<boolean>();
   const nodeRef = useRef<SVGSVGElement>(null);
   const timeRef = useRef<number>(0);
+  const { paths } = state;
+  console.log(state);
 
-  const addPath = useCallback(() => {
-    const action: Action = { type: "addPath" };
+  const addPath = useCallback((options?: PathOptions) => {
+    const action: Action = {
+      type: "addPath",
+      payload: { pathOptions: options },
+    };
     pointsDispatch(action);
   }, []);
 
@@ -109,12 +122,12 @@ export function useCursor(args: useCursorArgs = {}) {
   const startDrawing = useCallback(
     (e: MouseOrTouchEvent) => {
       isDrawingRef.current = true;
-      if (generateMultiplePaths) {
-        addPath();
+      if (generateMultiplePaths || !paths.length) {
+        addPath(pathOptions);
       }
       draw(e, { type: "M" });
     },
-    [addPath, draw, generateMultiplePaths]
+    [addPath, draw, generateMultiplePaths, pathOptions, paths]
   );
 
   const stopDrawing = useCallback(

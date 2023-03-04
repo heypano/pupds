@@ -39,6 +39,7 @@ function Scratch(props: ScratchProps) {
   const allPaths = useMemo(() => {
     return paths.map(({ points }) => getPathFromPoints(points));
   }, [paths]);
+  const path = allPaths[0];
 
   return (
     <SvgContainer>
@@ -82,16 +83,13 @@ function Scratch(props: ScratchProps) {
         </clipPath>
 
         <g clipPath={`url(#${maskId})`}>
-          {allPaths.map((path, index) => (
-            <path
-              key={index}
-              d={path}
-              id={`${pathId}_${index}`}
-              strokeWidth={strokeWidth}
-              fill="transparent"
-              stroke="grey"
-            />
-          ))}
+          <path
+            d={path}
+            id={pathId}
+            strokeWidth={strokeWidth}
+            fill="transparent"
+            stroke="grey"
+          />
         </g>
       </StSvg>
     </SvgContainer>

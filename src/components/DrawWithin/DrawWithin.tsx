@@ -28,7 +28,10 @@ function DrawWithin(props: DrawWithinProps) {
   } = props;
   const clipPathId = useMemo(() => uuid(), []);
   const pathId = useMemo(() => uuid(), []);
-  const { paths, ref } = useCursor({ generateMultiplePaths: true });
+  const { paths, ref } = useCursor({
+    generateMultiplePaths: true,
+    pathOptions: { strokeColor },
+  });
   const allPaths = useMemo(
     () => paths.map(({ points }) => getPathFromPoints(points), [paths]),
     [paths]
@@ -38,6 +41,7 @@ function DrawWithin(props: DrawWithinProps) {
       <g clipPath={`url(#${clipPathId})`} width="100%" height="100%">
         {allPaths.map((path, index) => (
           <StPath
+            key={index}
             d={path}
             id={`${pathId}_${index}`}
             strokeWidth={strokeWidth}
