@@ -7,9 +7,18 @@ export type Point = {
   type?: string;
 };
 
-export type Payload = Point;
+export type Path = {
+  points: Array<Point>;
+  pathOptions?: PathOptions;
+};
+
+export type Payload = any;
 
 export type MouseOrTouchEvent = TouchEvent | MouseEvent;
+
+export interface PathOptions {
+  strokeColor?: string;
+}
 
 export type Action = {
   type: string;
@@ -17,7 +26,7 @@ export type Action = {
 };
 
 export type State = {
-  points: Array<Point>;
+  paths: Array<Path>;
 };
 
 export type DrawOptions = {
@@ -25,30 +34,61 @@ export type DrawOptions = {
 };
 
 const initialState = {
-  points: [],
-  testProp: 5,
+  paths: [],
 };
 
 function cursorReducer(
   state: State,
-  { type, payload = {} as Payload }: Action
+  { type: actionType, payload = {} as Payload }: Action
 ) {
-  switch (type) {
+  const { x, y, type: pointType, pathOptions } = payload;
+  switch (actionType) {
+    case "addPath":
+      return {
+        ...state,
+        paths: [...state.paths, { points: [], pathOptions }],
+      };
     case "addPoint":
-      const { x, y, type } = payload;
-      return { ...state, points: [...state.points, { x, y, type }] };
+      const lastPath = state.paths[state.paths.length - 1];
+      const allButLast = state.paths.slice(0, state.paths.length - 1);
+      return {
+        ...state,
+        paths: [
+          ...allButLast,
+          {
+            ...lastPath,
+            points: [...lastPath.points, { x, y, type: pointType }],
+          },
+        ],
+      };
     case "clearPoints":
-      return { ...state, points: [] };
+      return { ...state, paths: [] };
     default:
       throw new Error("don't know");
   }
 }
 
-export function useCursor(threshold = 25) {
+interface useCursorArgs {
+  threshold?: number;
+  generateMultiplePaths?: boolean;
+  pathOptions?: PathOptions;
+}
+export function useCursor(args: useCursorArgs = {}) {
+  const { threshold = 25, generateMultiplePaths, pathOptions } = args;
   const [state, pointsDispatch] = useReducer(cursorReducer, initialState);
   const isDrawingRef = useRef<boolean>();
-  const nodeRef = useRef<SVGSVGElement>();
+  const nodeRef = useRef<SVGSVGElement>(null);
   const timeRef = useRef<number>(0);
+  const { paths } = state;
+  console.log(state);
+
+  const addPath = useCallback((options?: PathOptions) => {
+    const action: Action = {
+      type: "addPath",
+      payload: { pathOptions: options },
+    };
+    pointsDispatch(action);
+  }, []);
 
   const addPoint = useCallback((point: Point) => {
     const action: Action = { type: "addPoint", payload: point };
@@ -82,14 +122,17 @@ export function useCursor(threshold = 25) {
   const startDrawing = useCallback(
     (e: MouseOrTouchEvent) => {
       isDrawingRef.current = true;
-      draw(e);
+      if (generateMultiplePaths || !paths.length) {
+        addPath(pathOptions);
+      }
+      draw(e, { type: "M" });
     },
-    [draw]
+    [addPath, draw, generateMultiplePaths, pathOptions, paths]
   );
 
   const stopDrawing = useCallback(
     (e: MouseOrTouchEvent) => {
-      draw(e, { type: "Z" });
+      draw(e);
       isDrawingRef.current = false;
     },
     [draw]
@@ -101,6 +144,7 @@ export function useCursor(threshold = 25) {
       ["touchstart", startDrawing as EventListener],
       ["mousedown", startDrawing as EventListener],
       ["mouseup", stopDrawing as EventListener],
+      ["touchend", stopDrawing as EventListener],
       ["mousemove", draw as EventListener],
       ["touchmove", draw as EventListener],
     ]);
@@ -122,5 +166,5 @@ export function useCursor(threshold = 25) {
     };
   }, [draw, startDrawing, stopDrawing]);
 
-  return { points: state.points, addPoint, ref: nodeRef, clearPoints };
+  return { paths: state.paths, addPoint, ref: nodeRef, clearPoints };
 }

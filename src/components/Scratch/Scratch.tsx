@@ -1,4 +1,4 @@
-import React, { Ref, useMemo } from "react";
+import React, { useMemo } from "react";
 import { useCursor } from "./UseCursor";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
@@ -35,8 +35,11 @@ function Scratch(props: ScratchProps) {
   const { text = "", drawText, showClearButton } = props;
   const maskId = useMemo(() => uuidv4(), []);
   const pathId = useMemo(() => uuidv4(), []);
-  const { points, ref, clearPoints } = useCursor();
-  const path = useMemo(() => getPathFromPoints(points), [points]);
+  const { paths, ref, clearPoints } = useCursor();
+  const allPaths = useMemo(() => {
+    return paths.map(({ points }) => getPathFromPoints(points));
+  }, [paths]);
+  const path = allPaths[0];
 
   return (
     <SvgContainer>
@@ -50,7 +53,7 @@ function Scratch(props: ScratchProps) {
           Clear
         </StButton>
       )}
-      <StSvg viewBox={`0 0 1600 1600`} ref={ref as Ref<SVGSVGElement>}>
+      <StSvg viewBox={`0 0 1600 1600`} ref={ref}>
         <clipPath id={maskId}>
           <text
             fontSize={window.innerHeight / 9}

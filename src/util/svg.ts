@@ -28,13 +28,13 @@ function getPointInSvg(svg: SVGSVGElement, otherX: number, otherY: number) {
 
 export const getPathFromPoints = (points: Array<Point>) => {
   return points.reduce((path, point, index) => {
-    const { x, y } = point;
+    const { x, y, type } = point;
     const isNotFirstPoint = index > 0;
     const previousPoint = isNotFirstPoint
       ? points[index - 1]
       : { x: null, y: null, type: null };
-    const { x: x0, y: y0, type: lastType } = previousPoint;
-    const needToOpen = index === 0 || lastType === "Z";
+    const { x: x0, y: y0 } = previousPoint;
+    const needToOpen = type === "M";
     const isSameAsLast = x0 === x && y0 === y;
 
     if (needToOpen) {

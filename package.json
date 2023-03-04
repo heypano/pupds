@@ -8,6 +8,7 @@
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "deploy-storybook": "aws s3 sync --delete storybook-static/ s3://design.pup.codes",
+    "prelint": "tsc -noEmit",
     "lint": "eslint src --ext .tsx,.ts",
     "lint-fix": "eslint src --ext .tsx,.ts --fix"
   },
