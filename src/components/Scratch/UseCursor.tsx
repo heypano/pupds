@@ -20,6 +20,10 @@ export type State = {
   points: Array<Point>;
 };
 
+export type DrawOptions = {
+  type?: string;
+};
+
 const initialState = {
   points: [],
   testProp: 5,
@@ -55,10 +59,6 @@ export function useCursor(threshold = 25) {
     const action: Action = { type: "clearPoints" };
     pointsDispatch(action);
   }, []);
-
-  type DrawOptions = {
-    type?: string;
-  };
 
   const draw = useCallback(
     (e: MouseOrTouchEvent, options: DrawOptions = {}) => {
