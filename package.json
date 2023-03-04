@@ -1,11 +1,12 @@
 {
   "name": "@heypano/pupds",
   "license": "ISC",
-  "version": "0.0.34",
+  "version": "0.0.35",
   "description": "Pano Papadatos' Component Library",
   "scripts": {
     "rollup": "rollup -c",
     "storybook": "start-storybook -p 6006",
+    "serve-static": "npx http-server storybook-static",
     "build-storybook": "build-storybook",
     "deploy-storybook": "aws s3 sync --delete storybook-static/ s3://design.pup.codes",
     "prelint": "tsc -noEmit",
