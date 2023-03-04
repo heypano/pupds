@@ -9,7 +9,7 @@ export type Point = {
 
 export type Path = {
   points: Array<Point>;
-  options?: PathOptions;
+  pathOptions?: PathOptions;
 };
 
 export type Payload = any;

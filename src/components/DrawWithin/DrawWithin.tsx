@@ -1,6 +1,6 @@
 import React, { ReactNode, useMemo } from "react";
 import { v4 as uuid } from "uuid";
-import { useCursor } from "../Scratch/UseCursor";
+import { Path, useCursor } from "../Scratch/UseCursor";
 import { getPathFromPoints } from "../../util/svg";
 import styled from "styled-components";
 
@@ -8,6 +8,10 @@ const StPath = styled.path`
   stroke-linecap: round;
   stroke-linejoin: round;
   fill: transparent;
+`;
+
+const StSvg = styled.svg`
+  height: 100%;
 `;
 
 interface DrawWithinProps {
@@ -33,25 +37,33 @@ function DrawWithin(props: DrawWithinProps) {
     pathOptions: { strokeColor },
   });
   const allPaths = useMemo(
-    () => paths.map(({ points }) => getPathFromPoints(points), [paths]),
+    () =>
+      paths.map(
+        (path) => {
+          const { points, pathOptions } = path as Path;
+          console.log(path);
+          return { path: getPathFromPoints(points), pathOptions };
+        },
+        [paths]
+      ),
     [paths]
   );
   return (
-    <svg viewBox={viewBox} ref={ref}>
+    <StSvg viewBox={viewBox} ref={ref}>
       <g clipPath={`url(#${clipPathId})`} width="100%" height="100%">
-        {allPaths.map((path, index) => (
+        {allPaths.map(({ path, pathOptions }, index) => (
           <StPath
             key={index}
             d={path}
             id={`${pathId}_${index}`}
             strokeWidth={strokeWidth}
-            stroke={strokeColor}
+            stroke={pathOptions?.strokeColor}
           />
         ))}
       </g>
       {ImagePaths}
       <clipPath id={clipPathId}>{MaskPaths}</clipPath>
-    </svg>
+    </StSvg>
   );
 }
 export default DrawWithin;
