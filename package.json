@@ -69,5 +69,8 @@
   "bugs": {
     "url": "https://github.com/heypano/pupds/issues"
   },
-  "homepage": "https://github.com/heypano/pupds#readme"
+  "homepage": "https://github.com/heypano/pupds#readme",
+  "dependencies": {
+    "html2canvas": "^1.4.1"
+  }
 }

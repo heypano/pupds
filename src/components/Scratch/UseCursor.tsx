@@ -77,7 +77,7 @@ export function useCursor(args: useCursorArgs = {}) {
   const { threshold = 25, generateMultiplePaths, pathOptions } = args;
   const [state, pointsDispatch] = useReducer(cursorReducer, initialState);
   const isDrawingRef = useRef<boolean>();
-  const nodeRef = useRef<SVGSVGElement>(null);
+  const nodeRef = useRef<SVGSVGElement | null>(null);
   const timeRef = useRef<number>(0);
   const { paths } = state;
   console.log(state);

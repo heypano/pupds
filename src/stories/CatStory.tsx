@@ -1,7 +1,8 @@
 import { DrawWithin } from "../components";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { CatMaskPaths, CatPaths } from "../components/DrawWithin/cat/paths";
 import styled from "styled-components";
+import exportAsImage from "../lib/exportAsImage";
 
 interface CatStoryProps {}
 
@@ -17,8 +18,23 @@ const StContainer = styled.section`
 
 function CatStory(props: CatStoryProps) {
   const [color, setColor] = useState("#fabdad");
+  const ref = useRef<HTMLElement | null>(null);
+  useEffect(() => {
+    console.log("ref", ref);
+  }, []);
   return (
     <StContainer>
+      <button
+        onClick={() => {
+          if (ref.current) {
+            exportAsImage(ref.current, "bla.png").then(() => {
+              console.log("done?");
+            });
+          }
+        }}
+      >
+        Save
+      </button>
       <label>
         Pick a color{" "}
         <StInput
@@ -30,6 +46,7 @@ function CatStory(props: CatStoryProps) {
         />
       </label>
       <DrawWithin
+        ref={ref}
         strokeColor={color}
         viewBox="0 0 202.53 230.74"
         ImagePaths={<CatPaths />}
