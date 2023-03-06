@@ -22,9 +22,24 @@ jobs:
     # See: https://circleci.com/docs/2.0/configuration-reference/#steps
     steps:
       - checkout
+      - restore_cache:
+          name: Restore npm Package Cache
+          keys:
+            - npm-checksum-{{ checksum "package-lock.json" }}
       - run:
           name: "Install Dependencies"
           command: "npm install"
+      - save_cache:
+          name: Save npm Package Cache
+          key: npm-checksum-{{ checksum "package-lock.json" }}
+          paths:
+            - node_modules
+      - run:
+          name: "Lint Project"
+          command: "npm run lint"
+      - run:
+          name: "Build with Rollup"
+          command: "npm run rollup"
       - run:
           name: "Build Storybook"
           command: "npm run build-storybook"
@@ -36,6 +51,12 @@ jobs:
           aws-secret-access-key: AWS_SECRET_ACCESS_KEY_BLUE
           from: storybook-static
           to: 's3://design.pup.codes/'
+      - run:
+          name: Authenticate with NPM Registry
+          command: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+      - run:
+          name: Semantic release 🚀
+          command: npx semantic-release
 
 
 # Invoke jobs via workflows
