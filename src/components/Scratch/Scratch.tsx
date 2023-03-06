@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 import { getPathFromPoints } from "../../util/svg";
 
-const strokeWidth = 60;
+const strokeWidth = window.innerHeight / 9;
 
 export interface ScratchProps {
   text?: string;
