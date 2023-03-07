@@ -1,21 +1,31 @@
 import html2canvas from "html2canvas";
-const exportAsImage = async (element: HTMLElement, imageFileName: string) => {
-  const html = document.getElementsByTagName("html")[0];
-  const body = document.getElementsByTagName("body")[0];
-  let htmlWidth = html.clientWidth;
-  let bodyWidth = body.clientWidth;
-  const newWidth = element.scrollWidth - element.clientWidth;
-  if (newWidth > element.clientWidth) {
-    htmlWidth += newWidth;
-    bodyWidth += newWidth;
+
+export interface ExportAsImageArgs {
+  element: HTMLElement;
+  imageFileName: string;
+  width?: number;
+  height?: number;
+}
+const exportAsImage = async (args: ExportAsImageArgs) => {
+  const { element, imageFileName, width, height } = args;
+  const oldHeight = element.style.height;
+  const oldWidth = element.style.width;
+  if (width) {
+    element.style.width = `${width}px`;
   }
-  html.style.width = htmlWidth + "px";
-  body.style.width = bodyWidth + "px";
+  if (height) {
+    element.style.height = `${height}px`;
+  }
+
   const canvas = await html2canvas(element);
   const image = canvas.toDataURL("image/png", 1.0);
   downloadImage(image, imageFileName);
-  html.style.width = "";
-  body.style.width = "";
+  if (width) {
+    element.style.width = oldWidth;
+  }
+  if (height) {
+    element.style.height = oldHeight;
+  }
 };
 
 const downloadImage = (blob: string, fileName: string) => {

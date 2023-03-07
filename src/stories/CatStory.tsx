@@ -16,6 +16,10 @@ const StContainer = styled.section`
   height: 70vh;
 `;
 
+const StDrawWithin = styled(DrawWithin)`
+  padding: 10px;
+`;
+
 function CatStory(props: CatStoryProps) {
   const [color, setColor] = useState("#fabdad");
   const ref = useRef<HTMLElement | null>(null);
@@ -27,7 +31,12 @@ function CatStory(props: CatStoryProps) {
       <button
         onClick={() => {
           if (ref.current) {
-            exportAsImage(ref.current, "bla.png").then(() => {
+            exportAsImage({
+              element: ref.current,
+              imageFileName: "bla.png",
+              // width: 2000,
+              height: 2000,
+            }).then(() => {
               console.log("done?");
             });
           }
@@ -45,7 +54,7 @@ function CatStory(props: CatStoryProps) {
           }}
         />
       </label>
-      <DrawWithin
+      <StDrawWithin
         ref={ref}
         strokeColor={color}
         viewBox="0 0 202.53 230.74"
