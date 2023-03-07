@@ -49,7 +49,6 @@ const DrawWithin = forwardRef<HTMLElement | null, DrawWithinProps>(
         paths.map(
           (path) => {
             const { points, pathOptions } = path as Path;
-            console.log(path);
             return { path: getPathFromPoints(points), pathOptions };
           },
           [paths]

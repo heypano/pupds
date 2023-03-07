@@ -80,7 +80,6 @@ export function useCursor(args: useCursorArgs = {}) {
   const nodeRef = useRef<SVGSVGElement | null>(null);
   const timeRef = useRef<number>(0);
   const { paths } = state;
-  console.log(state);
 
   const addPath = useCallback((options?: PathOptions) => {
     const action: Action = {
