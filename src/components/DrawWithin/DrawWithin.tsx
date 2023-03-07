@@ -24,6 +24,7 @@ export interface DrawWithinProps {
   viewBox: string;
   ImagePaths: ReactNode;
   MaskPaths: ReactNode;
+  className?: string;
 }
 
 const DrawWithin = forwardRef<HTMLElement | null, DrawWithinProps>(
@@ -34,6 +35,7 @@ const DrawWithin = forwardRef<HTMLElement | null, DrawWithinProps>(
       viewBox,
       MaskPaths,
       ImagePaths,
+      className,
     } = props;
     const clipPathId = useMemo(() => uuid(), []);
     const pathId = useMemo(() => uuid(), []);
@@ -56,6 +58,7 @@ const DrawWithin = forwardRef<HTMLElement | null, DrawWithinProps>(
     );
     return (
       <StContainer
+        className={className}
         ref={(r) => {
           if (forwardedRef) {
             if (typeof forwardedRef === "function") {
