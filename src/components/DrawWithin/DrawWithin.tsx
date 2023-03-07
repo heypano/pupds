@@ -18,7 +18,7 @@ const StContainer = styled.section`
   height: 100%;
 `;
 
-interface DrawWithinProps {
+export interface DrawWithinProps {
   strokeWidth?: number;
   strokeColor?: string;
   viewBox: string;
