@@ -69,6 +69,18 @@ const DrawWithin = forwardRef<HTMLElement | null, DrawWithinProps>(
         }}
       >
         <StSvg viewBox={viewBox} ref={ref}>
+          <defs>
+            <pattern
+              id="pattern"
+              x="0"
+              y="0"
+              width="20"
+              height="20"
+              patternUnits="userSpaceOnUse"
+            >
+              <circle cx="10" cy="10" r="10" stroke="none" fill="#393" />
+            </pattern>
+          </defs>
           <g clipPath={`url(#${clipPathId})`} width="100%" height="100%">
             {allPaths.map(({ path, pathOptions }, index) => (
               <StPath
@@ -76,7 +88,7 @@ const DrawWithin = forwardRef<HTMLElement | null, DrawWithinProps>(
                 d={path}
                 id={`${pathId}_${index}`}
                 strokeWidth={strokeWidth}
-                stroke={pathOptions?.strokeColor}
+                stroke="url(#pattern)"
               />
             ))}
           </g>

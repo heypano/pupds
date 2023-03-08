@@ -8,8 +8,8 @@ export function getPointInSvgFromEvent(
   let y: number;
   if (event instanceof TouchEvent) {
     const { touches } = event as TouchEvent;
-    x = touches[0].clientX;
-    y = touches[0].clientY;
+    x = touches[0]?.clientX;
+    y = touches[0]?.clientY;
   } else {
     x = event.clientX;
     y = event.clientY;
