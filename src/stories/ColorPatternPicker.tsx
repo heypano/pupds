@@ -2,7 +2,7 @@ import {
   patternMap,
   PatternType,
 } from "../components/DrawWithin/patterns/data";
-import React, { ChangeEvent } from "react";
+import React from "react";
 
 interface ColorPatternPickerProps {
   color: string;

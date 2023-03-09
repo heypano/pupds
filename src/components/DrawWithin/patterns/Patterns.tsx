@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { patternMap, PatternType } from "./data";
 
 export interface Pattern {

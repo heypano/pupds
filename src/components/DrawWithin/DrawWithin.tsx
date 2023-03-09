@@ -1,4 +1,4 @@
-import React, { forwardRef, ReactNode, useMemo, useState } from "react";
+import React, { forwardRef, ReactNode, useMemo } from "react";
 import { v4 as uuid } from "uuid";
 import { Path, useCursor } from "../Scratch/UseCursor";
 import { getPathFromPoints } from "../../util/svg";
