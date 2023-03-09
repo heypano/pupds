@@ -1,5 +1,4 @@
 import React, { SVGProps } from "react";
-import styled from "styled-components";
 
 export const CatMaskPaths = () => (
   <path
