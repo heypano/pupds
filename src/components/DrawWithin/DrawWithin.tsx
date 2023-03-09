@@ -5,12 +5,6 @@ import { getPathFromPoints } from "../../util/svg";
 import styled from "styled-components";
 import Patterns, { Pattern } from "./patterns/Patterns";
 
-const StPath = styled.path`
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  fill: transparent;
-`;
-
 const StSvg = styled.svg`
   height: 100%;
 `;
@@ -80,11 +74,14 @@ const DrawWithin = forwardRef<HTMLElement | null, DrawWithinProps>(
             {allPaths.map(({ path, pathOptions }, index) => {
               const { patternIndex, strokeColor } = pathOptions;
               return (
-                <StPath
+                <path
                   key={index}
                   d={path}
                   id={`${pathId}_${index}`}
                   strokeWidth={strokeWidth}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  fill="transparent"
                   stroke={
                     Number.isInteger(patternIndex)
                       ? `url(#${pattern_id_base}_${patternIndex})`
