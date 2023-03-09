@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useReducer, useRef } from "react";
 import { getPointInSvgFromEvent } from "../../util/svg";
+import { PatternType } from "../DrawWithin/patterns/data";
 
 export type Point = {
   x: number;
@@ -18,6 +19,7 @@ export type MouseOrTouchEvent = TouchEvent | MouseEvent;
 
 export interface PathOptions {
   strokeColor?: string;
+  patternIndex?: number;
 }
 
 export type Action = {

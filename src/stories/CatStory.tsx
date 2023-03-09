@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { CatMaskPaths, CatPaths } from "../components/DrawWithin/cat/paths";
 import styled from "styled-components";
 import exportAsImage from "../lib/exportAsImage";
+import { patternMap } from "../components/DrawWithin/patterns/data";
 
 interface CatStoryProps {}
 
@@ -20,8 +21,14 @@ const StDrawWithin = styled(DrawWithin)`
   padding: 10px;
 `;
 
+const StPatternButton = styled.div`
+  padding: 10px;
+  background: lightpink;
+`;
+
 function CatStory(props: CatStoryProps) {
   const [color, setColor] = useState("#fabdad");
+  const [patternIndex, setPatternIndex] = useState(0);
   const ref = useRef<HTMLElement | null>(null);
   useEffect(() => {
     console.log("ref", ref);
@@ -54,9 +61,22 @@ function CatStory(props: CatStoryProps) {
           }}
         />
       </label>
+      Pattern: {patternIndex}
+      {Object.keys(patternMap).map((patternType, index) => {
+        return (
+          <StPatternButton
+            onClick={() => {
+              setPatternIndex(index);
+            }}
+          >
+            Pattern {index}
+          </StPatternButton>
+        );
+      })}
       <StDrawWithin
         ref={ref}
         strokeColor={color}
+        patternIndex={patternIndex}
         viewBox="0 0 202.53 230.74"
         ImagePaths={<CatPaths />}
         MaskPaths={<CatMaskPaths />}

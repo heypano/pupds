@@ -3,6 +3,7 @@ import { v4 as uuid } from "uuid";
 import { Path, useCursor } from "../Scratch/UseCursor";
 import { getPathFromPoints } from "../../util/svg";
 import styled from "styled-components";
+import Patterns from "./patterns/Patterns";
 
 const StPath = styled.path`
   stroke-linecap: round;
@@ -25,6 +26,7 @@ export interface DrawWithinProps {
   ImagePaths: ReactNode;
   MaskPaths: ReactNode;
   className?: string;
+  patternIndex?: number;
 }
 
 const DrawWithin = forwardRef<HTMLElement | null, DrawWithinProps>(
@@ -36,25 +38,27 @@ const DrawWithin = forwardRef<HTMLElement | null, DrawWithinProps>(
       MaskPaths,
       ImagePaths,
       className,
+      patternIndex,
     } = props;
     const clipPathId = useMemo(() => uuid(), []);
     const pathId = useMemo(() => uuid(), []);
     const { paths, ref } = useCursor({
       generateMultiplePaths: true,
-      pathOptions: { strokeColor },
+      pathOptions: { strokeColor, patternIndex },
     });
 
     const allPaths = useMemo(
       () =>
         paths.map(
           (path) => {
-            const { points, pathOptions } = path as Path;
+            const { points, pathOptions = {} } = path as Path;
             return { path: getPathFromPoints(points), pathOptions };
           },
           [paths]
         ),
       [paths]
     );
+    const pattern_id_base = useMemo(() => uuid(), []);
     return (
       <StContainer
         className={className}
@@ -69,28 +73,30 @@ const DrawWithin = forwardRef<HTMLElement | null, DrawWithinProps>(
         }}
       >
         <StSvg viewBox={viewBox} ref={ref}>
-          <defs>
-            <pattern
-              id="pattern"
-              x="0"
-              y="0"
-              width="20"
-              height="20"
-              patternUnits="userSpaceOnUse"
-            >
-              <circle cx="10" cy="10" r="10" stroke="none" fill="#393" />
-            </pattern>
-          </defs>
+          <Patterns
+            patterns={[
+              { type: "dominoes", fill: "hotpink" },
+              { type: "bankNote", fill: "red" },
+            ]}
+            pattern_id_base={pattern_id_base}
+          />
           <g clipPath={`url(#${clipPathId})`} width="100%" height="100%">
-            {allPaths.map(({ path, pathOptions }, index) => (
-              <StPath
-                key={index}
-                d={path}
-                id={`${pathId}_${index}`}
-                strokeWidth={strokeWidth}
-                stroke="url(#pattern)"
-              />
-            ))}
+            {allPaths.map(({ path, pathOptions }, index) => {
+              const { patternIndex, strokeColor } = pathOptions;
+              return (
+                <StPath
+                  key={index}
+                  d={path}
+                  id={`${pathId}_${index}`}
+                  strokeWidth={strokeWidth}
+                  stroke={
+                    Number.isInteger(patternIndex)
+                      ? `url(#${pattern_id_base}_${patternIndex})`
+                      : strokeColor
+                  }
+                />
+              );
+            })}
           </g>
           {ImagePaths}
           <clipPath id={clipPathId}>{MaskPaths}</clipPath>
