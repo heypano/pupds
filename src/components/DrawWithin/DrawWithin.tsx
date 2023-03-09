@@ -1,9 +1,9 @@
-import React, { forwardRef, ReactNode, useMemo } from "react";
+import React, { forwardRef, ReactNode, useMemo, useState } from "react";
 import { v4 as uuid } from "uuid";
 import { Path, useCursor } from "../Scratch/UseCursor";
 import { getPathFromPoints } from "../../util/svg";
 import styled from "styled-components";
-import Patterns from "./patterns/Patterns";
+import Patterns, { Pattern } from "./patterns/Patterns";
 
 const StPath = styled.path`
   stroke-linecap: round;
@@ -26,7 +26,8 @@ export interface DrawWithinProps {
   ImagePaths: ReactNode;
   MaskPaths: ReactNode;
   className?: string;
-  patternIndex?: number;
+  patternIndex?: number | null;
+  patterns: Array<Pattern>;
 }
 
 const DrawWithin = forwardRef<HTMLElement | null, DrawWithinProps>(
@@ -39,6 +40,7 @@ const DrawWithin = forwardRef<HTMLElement | null, DrawWithinProps>(
       ImagePaths,
       className,
       patternIndex,
+      patterns,
     } = props;
     const clipPathId = useMemo(() => uuid(), []);
     const pathId = useMemo(() => uuid(), []);
@@ -73,13 +75,7 @@ const DrawWithin = forwardRef<HTMLElement | null, DrawWithinProps>(
         }}
       >
         <StSvg viewBox={viewBox} ref={ref}>
-          <Patterns
-            patterns={[
-              { type: "dominoes", fill: "hotpink" },
-              { type: "bankNote", fill: "red" },
-            ]}
-            pattern_id_base={pattern_id_base}
-          />
+          <Patterns patterns={patterns} pattern_id_base={pattern_id_base} />
           <g clipPath={`url(#${clipPathId})`} width="100%" height="100%">
             {allPaths.map(({ path, pathOptions }, index) => {
               const { patternIndex, strokeColor } = pathOptions;

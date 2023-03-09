@@ -3,7 +3,11 @@ import React, { useEffect, useRef, useState } from "react";
 import { CatMaskPaths, CatPaths } from "../components/DrawWithin/cat/paths";
 import styled from "styled-components";
 import exportAsImage from "../lib/exportAsImage";
-import { patternMap } from "../components/DrawWithin/patterns/data";
+import {
+  patternMap,
+  PatternType,
+} from "../components/DrawWithin/patterns/data";
+import ColorPatternPicker from "./ColorPatternPicker";
 
 interface CatStoryProps {}
 
@@ -27,14 +31,20 @@ const StPatternButton = styled.div`
 `;
 
 function CatStory(props: CatStoryProps) {
-  const [color, setColor] = useState("#fabdad");
-  const [patternIndex, setPatternIndex] = useState(0);
+  const [color, setColor] = useState<string>("hotpink");
+  const [pattern, setPattern] = useState<PatternType>("bankNote");
   const ref = useRef<HTMLElement | null>(null);
   useEffect(() => {
     console.log("ref", ref);
   }, []);
   return (
     <StContainer>
+      <ColorPatternPicker
+        color={color}
+        pattern={pattern}
+        setColor={setColor}
+        setPattern={setPattern}
+      />
       <button
         onClick={() => {
           if (ref.current) {
@@ -51,35 +61,17 @@ function CatStory(props: CatStoryProps) {
       >
         Save
       </button>
-      <label>
-        Pick a color{" "}
-        <StInput
-          type="color"
-          value={color}
-          onChange={(e) => {
-            setColor(e.target.value);
-          }}
-        />
-      </label>
-      Pattern: {patternIndex}
-      {Object.keys(patternMap).map((patternType, index) => {
-        return (
-          <StPatternButton
-            onClick={() => {
-              setPatternIndex(index);
-            }}
-          >
-            Pattern {index}
-          </StPatternButton>
-        );
-      })}
       <StDrawWithin
         ref={ref}
         strokeColor={color}
-        patternIndex={patternIndex}
+        patternIndex={0}
         viewBox="0 0 202.53 230.74"
         ImagePaths={<CatPaths />}
         MaskPaths={<CatMaskPaths />}
+        patterns={[
+          { type: "dominoes", fill: "hotpink" },
+          { type: "bankNote", fill: "red" },
+        ]}
       />
     </StContainer>
   );

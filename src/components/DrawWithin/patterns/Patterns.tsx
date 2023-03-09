@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import { patternMap, PatternType } from "./data";
 
-interface Pattern {
+export interface Pattern {
   type: PatternType;
   fill: string;
 }

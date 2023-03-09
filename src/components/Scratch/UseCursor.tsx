@@ -19,7 +19,7 @@ export type MouseOrTouchEvent = TouchEvent | MouseEvent;
 
 export interface PathOptions {
   strokeColor?: string;
-  patternIndex?: number;
+  patternIndex?: number | null;
 }
 
 export type Action = {

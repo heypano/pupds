@@ -4,7 +4,7 @@ interface PatternContentProps {
   fill: string;
 }
 type PatternContent = FunctionComponent<PatternContentProps>;
-interface PatternData {
+export interface PatternData {
   width: number;
   height: number;
   Content: PatternContent;
