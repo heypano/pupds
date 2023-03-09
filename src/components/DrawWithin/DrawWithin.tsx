@@ -68,9 +68,14 @@ const DrawWithin = forwardRef<HTMLElement | null, DrawWithinProps>(
           }
         }}
       >
-        <StSvg viewBox={viewBox} ref={ref} height="100%">
+        <StSvg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox={viewBox}
+          ref={ref}
+          height="100%"
+        >
           <Patterns patterns={patterns} pattern_id_base={pattern_id_base} />
-          <g clipPath={`url(#${clipPathId})`} width="100%" height="100%">
+          <g clipPath={`url(#${clipPathId})`} fill="none">
             {allPaths.map(({ path, pathOptions }, index) => {
               const { patternIndex, strokeColor } = pathOptions;
               return (
