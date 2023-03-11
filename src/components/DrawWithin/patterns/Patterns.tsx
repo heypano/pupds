@@ -7,11 +7,11 @@ export interface Pattern {
 }
 interface PatternProps {
   patterns: Array<Pattern>;
-  pattern_id_base?: string;
+  patternIdBase?: string;
 }
 
 export function Patterns(props: PatternProps) {
-  const { patterns, pattern_id_base } = props;
+  const { patterns, patternIdBase } = props;
 
   return (
     <defs>
@@ -20,7 +20,7 @@ export function Patterns(props: PatternProps) {
         const { width, height, Content } = patternMap[type];
         return (
           <pattern
-            id={`${pattern_id_base}_${index}`}
+            id={`${patternIdBase}_${index}`}
             x="0"
             y="0"
             width={width}

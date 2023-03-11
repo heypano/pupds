@@ -11,6 +11,11 @@ const StSvg = styled.svg`
 
 const StContainer = styled.section`
   height: 100%;
+
+  &,
+  * {
+    box-sizing: border-box;
+  }
 `;
 
 export interface DrawWithinProps {
@@ -22,6 +27,7 @@ export interface DrawWithinProps {
   className?: string;
   patternIndex?: number | null;
   patterns: Array<Pattern>;
+  patternIdBase: string;
 }
 
 const DrawWithin = forwardRef<HTMLElement | null, DrawWithinProps>(
@@ -35,6 +41,7 @@ const DrawWithin = forwardRef<HTMLElement | null, DrawWithinProps>(
       className,
       patternIndex,
       patterns,
+      patternIdBase,
     } = props;
     const clipPathId = useMemo(() => uuid(), []);
     const pathId = useMemo(() => uuid(), []);
@@ -42,7 +49,7 @@ const DrawWithin = forwardRef<HTMLElement | null, DrawWithinProps>(
       generateMultiplePaths: true,
       pathOptions: { strokeColor, patternIndex },
     });
-
+    // TODO add custom cursor that reflects selected pattern and brush size
     const allPaths = useMemo(
       () =>
         paths.map(
@@ -54,7 +61,7 @@ const DrawWithin = forwardRef<HTMLElement | null, DrawWithinProps>(
         ),
       [paths]
     );
-    const pattern_id_base = useMemo(() => uuid(), []);
+
     return (
       <StContainer
         className={className}
@@ -74,7 +81,7 @@ const DrawWithin = forwardRef<HTMLElement | null, DrawWithinProps>(
           ref={ref}
           height="100%"
         >
-          <Patterns patterns={patterns} pattern_id_base={pattern_id_base} />
+          <Patterns patterns={patterns} patternIdBase={patternIdBase} />
           <g clipPath={`url(#${clipPathId})`} fill="none">
             {allPaths.map(({ path, pathOptions }, index) => {
               const { patternIndex, strokeColor } = pathOptions;
@@ -89,7 +96,7 @@ const DrawWithin = forwardRef<HTMLElement | null, DrawWithinProps>(
                   fill="transparent"
                   stroke={
                     Number.isInteger(patternIndex)
-                      ? `url(#${pattern_id_base}_${patternIndex})`
+                      ? `url(#${patternIdBase}_${patternIndex})`
                       : strokeColor
                   }
                 />
