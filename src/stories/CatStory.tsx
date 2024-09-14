@@ -44,7 +44,7 @@ function CatStory(props: CatStoryProps) {
   return (
     <StContainer>
       <StLeft>
-        <h3>Available Patterns</h3>
+        <h3>Available Patterns - take a look</h3>
         <button
           type="button"
           onClick={() => {

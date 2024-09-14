@@ -10,6 +10,7 @@ const StSvg = styled.svg`
 `;
 
 const StContainer = styled.section`
+  display: grid;
   height: 100%;
 
   &,

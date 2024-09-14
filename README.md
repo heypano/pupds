@@ -1,6 +1,10 @@
 # Steps
-- Deploy library
-- 
+
+## To Deploy library
+- Just push -- but you will have to configure environment variables
+    1. GH_TOKEN, expires, is a circleCI var personal access token https://github.com/settings/tokens
+    2. The SSH key in github / deploy key
+
 
 # Resources
 
