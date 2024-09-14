@@ -1,9 +1,9 @@
 import React, { FunctionComponent } from "react";
 
-interface PatternContentProps {
+export interface PatternContentProps {
   fill: string;
 }
-type PatternContent = FunctionComponent<PatternContentProps>;
+export type PatternContent = FunctionComponent<PatternContentProps>;
 export interface PatternData {
   width: number;
   height: number;

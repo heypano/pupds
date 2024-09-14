@@ -1,3 +1,7 @@
+# Steps
+- Deploy library
+- 
+
 # Resources
 
 ## Component Library 
