@@ -45,17 +45,17 @@ jobs:
       - run:
           name: "Build Storybook"
           command: "npm run build-storybook"
-      - aws-s3/sync:
-          arguments: |
-            --delete
-          from: storybook-static
-          to: 's3://design.pup.codes/'
       - run:
           name: Authenticate with NPM Registry
           command: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
       - run:
           name: Semantic release 🚀
           command: npx semantic-release
+      - aws-s3/sync:
+          arguments: |
+            --delete
+          from: storybook-static
+          to: 's3://design.pup.codes/'
 
 
 # Invoke jobs via workflows
