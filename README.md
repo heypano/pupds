@@ -5,6 +5,8 @@
     1. GH_TOKEN, expires, is a circleCI var personal access token https://github.com/settings/tokens
     2. The SSH key in github / deploy key
 
+## Storybook
+to update `npx sb@latest init`
 
 # Resources
 

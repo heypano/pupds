@@ -1,23 +1,22 @@
 import React from "react";
-import { ComponentMeta, ComponentStory } from "@storybook/react";
+import { Meta, StoryObj } from "@storybook/react";
 
 import CatStory from "./CatStory";
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
-export default {
+const meta: Meta<typeof CatStory> = {
   title: "DrawWithin sample story",
   component: CatStory,
-  // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   // argTypes: {
   //   backgroundColor: { control: 'color' },
   // },
-} as ComponentMeta<typeof CatStory>;
+};
+
+export default meta;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof CatStory> = (args) => (
-  <CatStory {...args} />
-);
+type Story = StoryObj<typeof CatStory>;
 
-export const Cat = Template.bind({});
-// More on args: https://storybook.js.org/docs/react/writing-stories/args
-Cat.args = {};
+export const Cat: Story = {
+  args: {},
+};
