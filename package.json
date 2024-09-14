@@ -13,6 +13,7 @@
     "lint": "eslint src --ext .tsx,.ts",
     "lint-fix": "eslint src --ext .tsx,.ts --fix"
   },
+  "type": "module",
   "author": "Pano Papadatos",
   "devDependencies": {
     "@babel/core": "^7.18.5",
