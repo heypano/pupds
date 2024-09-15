@@ -15,8 +15,9 @@ jobs:
     docker:
       - image: cimg/base:current
     steps:
-      - ls:
-          command: ls
+      - run:
+          name: "List Files (ls -la)"
+          command: "ls -la"
       - aws-cli/setup
       - aws-s3/sync:
           arguments: |
