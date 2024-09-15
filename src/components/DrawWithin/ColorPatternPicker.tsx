@@ -44,7 +44,7 @@ const StControlsContainer = styled.section`
 `;
 
 const StControls = styled.section`
-  display: flex;
+  display: grid;
   align-items: center;
   height: 100px;
 `;

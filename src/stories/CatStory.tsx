@@ -38,9 +38,6 @@ function CatStory(props: CatStoryProps) {
     { type: "bankNote", fill: "red" },
   ]);
 
-  useEffect(() => {
-    console.log("ref", ref);
-  }, []);
   const patternIdBase = useMemo(() => uuid(), []);
   return (
     <StContainer>
