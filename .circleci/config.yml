@@ -11,19 +11,6 @@ orbs:
 
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
-  s3-sync:
-    docker:
-      - image: cimg/base:current
-    steps:
-      - run:
-          name: "List Files (ls -la)"
-          command: "ls -la"
-      - aws-cli/setup
-      - aws-s3/sync:
-          arguments: |
-            --delete
-          from: storybook-static
-          to: 's3://design.pup.codes/'
   build-project:
     docker:
       - image: cimg/node:22.8.0
@@ -52,6 +39,12 @@ jobs:
       - run:
           name: "Build Storybook"
           command: "npm run build-storybook"
+      - aws-cli/setup
+      - aws-s3/sync:
+          arguments: |
+            --delete
+          from: storybook-static
+          to: 's3://design.pup.codes/'
       - run:
           name: Authenticate with NPM Registry
           command: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
