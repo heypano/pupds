@@ -1,7 +1,7 @@
 {
   "name": "@heypano/pupds",
   "license": "ISC",
-  "version": "2.0.7",
+  "version": "2.0.8",
   "description": "Pano Papadatos' Component Library",
   "scripts": {
     "rollup": "rollup -c",
