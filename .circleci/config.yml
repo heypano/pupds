@@ -15,6 +15,8 @@ jobs:
     docker:
       - image: cimg/base:current
     steps:
+      - ls:
+          command: ls
       - aws-cli/setup
       - aws-s3/sync:
           arguments: |
