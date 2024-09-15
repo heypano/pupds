@@ -6,7 +6,8 @@ import exportAsImage from "../lib/exportAsImage";
 import ColorPatternPicker from "../components/DrawWithin/ColorPatternPicker";
 import { Pattern } from "../components/DrawWithin/patterns/Patterns";
 import { v4 as uuid } from "uuid";
-interface CatStoryProps {}
+import { DrawWithinProps } from "../components/DrawWithin/DrawWithin";
+type CatStoryProps = Partial<DrawWithinProps>;
 
 const StContainer = styled.section`
   display: grid;
@@ -105,6 +106,7 @@ function CatStory(props: CatStoryProps) {
           ImagePaths={<CatPaths />}
           MaskPaths={<CatMaskPaths />}
           patterns={patterns}
+          {...props}
         />
       </StRight>
     </StContainer>

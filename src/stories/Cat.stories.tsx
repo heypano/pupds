@@ -7,6 +7,7 @@ import CatStory from "./CatStory";
 const meta: Meta<typeof CatStory> = {
   title: "DrawWithin sample story",
   component: CatStory,
+  tags: ["autodocs"],
   // argTypes: {
   //   backgroundColor: { control: 'color' },
   // },
@@ -18,5 +19,7 @@ export default meta;
 type Story = StoryObj<typeof CatStory>;
 
 export const Cat: Story = {
-  args: {},
+  args: {
+    className: "hu",
+  },
 };
