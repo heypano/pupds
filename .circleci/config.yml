@@ -24,7 +24,6 @@ jobs:
             --delete
           from: storybook-static
           to: 's3://design.pup.codes/'
-          overwrite: true
   build-project:
     docker:
       - image: cimg/base:current
