@@ -15,11 +15,7 @@ jobs:
     docker:
       - image: cimg/base:current
     steps:
-      - run:
-          name: Install AWS CLI
-          command: |
-            apt-get update && \
-            apt-get install -y awscli
+      - aws-cli/setup
       - aws-s3/sync:
           arguments: |
             --delete
