@@ -28,7 +28,7 @@ const StContainer = styled.section<Partial<ColorPatternPickerProps>>`
 `;
 
 const StPreview = styled.section`
-  position: absolute;
+  position: relative;
   width: 100%;
   height: 100%;
   svg {
@@ -37,10 +37,15 @@ const StPreview = styled.section`
 `;
 
 const StControlsContainer = styled.section`
-  position: absolute;
   width: 100%;
   height: 100%;
   z-index: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
 `;
 
 const StControls = styled.section`

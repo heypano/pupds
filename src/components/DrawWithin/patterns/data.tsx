@@ -15,6 +15,11 @@ export interface PatternMap {
 }
 
 export const patternMap: PatternMap = {
+  solid: {
+    width: 1,
+    height: 1,
+    Content: ({ fill }) => <rect width="100%" height="100%" fill={fill} />,
+  },
   dominoes: {
     width: 126,
     height: 83,
