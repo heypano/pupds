@@ -1,12 +1,10 @@
-import React from "react";
 import { Meta, StoryObj } from "@storybook/react";
-
-import CatStory from "./CatStory";
+import { ColorPatternPicker } from "../components";
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
-const meta: Meta<typeof CatStory> = {
-  title: "DrawWithin story",
-  component: CatStory,
+const meta: Meta<typeof ColorPatternPicker> = {
+  title: "ColorPatternPicker story",
+  component: ColorPatternPicker,
   tags: ["autodocs"],
   // argTypes: {
   //   backgroundColor: { control: 'color' },
@@ -16,10 +14,8 @@ const meta: Meta<typeof CatStory> = {
 export default meta;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-type Story = StoryObj<typeof CatStory>;
+type Story = StoryObj<typeof ColorPatternPicker>;
 
-export const Cat: Story = {
-  args: {
-    className: "hu",
-  },
+export const ColorPatternPickerStory: Story = {
+  args: {},
 };

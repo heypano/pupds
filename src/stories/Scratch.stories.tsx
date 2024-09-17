@@ -5,7 +5,7 @@ import { Scratch } from "../components";
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 const meta: Meta<typeof Scratch> = {
-  title: "Scratch sample story",
+  title: "Scratch story",
   component: Scratch,
   // argTypes: {
   //   backgroundColor: { control: 'color' },

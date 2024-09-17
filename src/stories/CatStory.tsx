@@ -1,12 +1,12 @@
-import { DrawWithin } from "../components";
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import { DrawWithin, PatternType } from "../components";
+import React, { useCallback, useRef, useState } from "react";
 import { CatMaskPaths, CatPaths } from "../components/DrawWithin/cat/paths";
 import styled from "styled-components";
 import exportAsImage from "../lib/exportAsImage";
 import ColorPatternPicker from "../components/DrawWithin/ColorPatternPicker";
-import { Pattern } from "../components/DrawWithin/patterns/Patterns";
-import { v4 as uuid } from "uuid";
+import { PatternWithFill } from "../components/DrawWithin/patterns/Patterns";
 import { DrawWithinProps } from "../components/DrawWithin/DrawWithin";
+
 type CatStoryProps = Partial<DrawWithinProps>;
 
 const StContainer = styled.section`
@@ -22,10 +22,6 @@ const StControls = styled.section`
   display: flex;
 `;
 
-const StNumberInput = styled.input`
-  padding: 10px;
-`;
-
 const StLeft = styled.section``;
 
 const StRight = styled.section``;
@@ -33,47 +29,47 @@ const StRight = styled.section``;
 function CatStory(props: CatStoryProps) {
   const ref = useRef<HTMLElement | null>(null);
   const [currentPatternIndex, setCurrentPatternIndex] = useState(0);
-  const [patterns, setPatterns] = useState<Array<Pattern>>([
+  const [patterns, setPatterns] = useState<Array<PatternWithFill>>([
     { type: "dominoes", fill: "hotpink" },
     { type: "bankNote", fill: "red" },
   ]);
 
-  const patternIdBase = useMemo(() => uuid(), []);
+  const setColor = useCallback(
+    (index: number, fill: string) => {
+      if (patterns[index].fill !== fill) {
+        const newPatterns = [...patterns];
+        newPatterns[index] = {
+          ...newPatterns[index],
+          fill,
+        };
+        setPatterns(newPatterns);
+      }
+    },
+    [patterns]
+  );
+
+  const setPatternType = useCallback(
+    (index: number, type: PatternType) => {
+      if (patterns[index].type !== type) {
+        const newPatterns = [...patterns];
+        newPatterns[index] = {
+          ...newPatterns[index],
+          type,
+        };
+        setPatterns(newPatterns);
+      }
+    },
+    [patterns]
+  );
+
   return (
     <StContainer>
       <StLeft>
         <h3>Available Patterns - take a look below</h3>
-        <button
-          type="button"
-          onClick={() => {
-            setPatterns([...patterns, { type: "dominoes", fill: "hotpink" }]);
-          }}
-        >
-          Add Pattern
-        </button>
 
         {patterns.map(({ type, fill }, index) => (
-          <StControls>
-            <ColorPatternPicker
-              patternIdBase={patternIdBase}
-              isSelected={currentPatternIndex === index}
-              patternIndex={index}
-              color={fill}
-              pattern={type}
-              setPatternIndex={setCurrentPatternIndex}
-              setColor={(fill) => {
-                const newPatterns = [...patterns];
-                const newPattern = { ...newPatterns[index], fill };
-                newPatterns[index] = newPattern;
-                setPatterns(newPatterns);
-              }}
-              setPattern={(type) => {
-                const newPatterns = [...patterns];
-                const newPattern = { ...newPatterns[index], type };
-                newPatterns[index] = newPattern;
-                setPatterns(newPatterns);
-              }}
-            />
+          <StControls key={index}>
+            <ColorPatternPicker />
           </StControls>
         ))}
         <button
@@ -96,8 +92,7 @@ function CatStory(props: CatStoryProps) {
       <StRight>
         <StDrawWithin
           ref={ref}
-          patternIdBase={patternIdBase}
-          // strokeColor={color}
+          patternIdBase="pattern"
           patternIndex={currentPatternIndex}
           viewBox="0 0 202.53 230.74"
           ImagePaths={<CatPaths />}

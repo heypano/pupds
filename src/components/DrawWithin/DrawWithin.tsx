@@ -3,7 +3,7 @@ import { v4 as uuid } from "uuid";
 import { Path, useCursor } from "../Scratch/UseCursor";
 import { getPathFromPoints } from "../../util/svg";
 import styled from "styled-components";
-import Patterns, { Pattern } from "./patterns/Patterns";
+import Patterns, { PatternWithFill } from "./patterns/Patterns";
 
 const StSvg = styled.svg`
   height: 100%;
@@ -27,7 +27,7 @@ export interface DrawWithinProps {
   MaskPaths: ReactNode;
   className?: string;
   patternIndex?: number | null;
-  patterns: Array<Pattern>;
+  patterns: Array<PatternWithFill>;
   patternIdBase: string;
 }
 

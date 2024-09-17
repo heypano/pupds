@@ -1,12 +1,12 @@
 import React from "react";
 import { patternMap, PatternType } from "./data";
 
-export interface Pattern {
+export interface PatternWithFill {
   type: PatternType;
   fill: string;
 }
 interface PatternProps {
-  patterns: Array<Pattern>;
+  patterns: Array<PatternWithFill>;
   patternIdBase?: string;
 }
 
@@ -20,6 +20,7 @@ export function Patterns(props: PatternProps) {
         const { width, height, Content } = patternMap[type];
         return (
           <pattern
+            key={index}
             id={`${patternIdBase}_${index}`}
             x="0"
             y="0"
