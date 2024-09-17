@@ -9,6 +9,7 @@ const StPatternPickerContainer = styled.section`
   grid-auto-flow: column; /* places items in a row */
   grid-gap: 10px; /* space between items */
   overflow-x: auto; /* allow horizontal scrolling */
+  overflow-y: hidden; /* hide vertical scrollbar */
   white-space: nowrap; /* prevent wrapping to the next line */
   align-items: flex-start;
   justify-content: flex-start;
