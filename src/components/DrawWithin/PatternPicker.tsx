@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import React, { useMemo, useState } from "react";
-import { patternMap } from "./patterns/data";
+import { PatternData, patternMap, PatternType } from "./patterns/data";
 import PatternPreview from "./PatternPreview";
 import { Patterns, PatternWithFill } from "./patterns/Patterns";
 
@@ -12,7 +12,7 @@ const StPatternPickerContainer = styled.section`
 
 const desktopPatternSize = 150;
 const mobilePatternSize = 100;
-const StPatternPreviewContainer = styled.section`
+const StPatternPreviewContainer = styled.section<{ selected: boolean }>`
   display: flex;
   flex-shrink: 0;
   width: ${desktopPatternSize}px;
@@ -21,16 +21,26 @@ const StPatternPreviewContainer = styled.section`
     width: ${mobilePatternSize}px;
     height: ${mobilePatternSize}px;
   }
+  border: 1px solid ${({ selected }) => (selected ? "green" : "transparent")};
+
   &:hover {
     filter: invert(0.5);
   }
+
   & svg {
     width: 100%;
     height: 100%;
   }
 `;
+type PatternPickerProps = {
+  selectedPattern?: PatternType;
+  onSelect: (patternType: PatternType) => void;
+};
 
-export function PatternPicker() {
+export function PatternPicker({
+  onSelect,
+  selectedPattern,
+}: PatternPickerProps) {
   const patternBase = "pattern_preview";
   const patternsWithFill = useMemo<PatternWithFill[]>(
     () =>
@@ -45,9 +55,15 @@ export function PatternPicker() {
         <Patterns patterns={patternsWithFill} patternIdBase={patternBase} />
       </svg>
       <StPatternPickerContainer>
-        {Object.keys(patternMap).map((_, index) => {
+        {Object.keys(patternMap).map((key, index) => {
           return (
-            <StPatternPreviewContainer>
+            <StPatternPreviewContainer
+              key={index}
+              selected={selectedPattern === key}
+              onClick={() => {
+                onSelect(key as PatternType);
+              }}
+            >
               <PatternPreview
                 patternIdBase={patternBase}
                 patternIndex={index}
