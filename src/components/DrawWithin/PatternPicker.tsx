@@ -1,8 +1,9 @@
 import styled from "styled-components";
-import React, { useMemo, useState } from "react";
-import { PatternData, patternMap, PatternType } from "./patterns/data";
+import React, { useMemo } from "react";
+import { patternMap, PatternType } from "./patterns/data";
 import PatternPreview from "./PatternPreview";
 import { Patterns, PatternWithFill } from "./patterns/Patterns";
+import { v4 as uuid } from "uuid";
 
 const StPatternPickerContainer = styled.section`
   display: grid;
@@ -33,7 +34,7 @@ const StPatternPreviewContainer = styled.section<{ selected: boolean }>`
   padding: 5px;
 
   &:hover {
-    filter: invert(0.5);
+    filter: grayscale(0.4);
   }
 
   & svg {
@@ -52,7 +53,7 @@ export function PatternPicker({
   selectedPattern,
   fill = "#000",
 }: PatternPickerProps) {
-  const patternBase = "pattern_preview";
+  const patternBase = useMemo(() => `pattern_preview_${uuid()}`, []);
   const patternsWithFill = useMemo<PatternWithFill[]>(
     () =>
       Object.entries(patternMap).map(([key, patternData]) => {
