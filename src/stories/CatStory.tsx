@@ -18,8 +18,10 @@ const StDrawWithin = styled(DrawWithin)`
   padding: 10px;
 `;
 
-const StControls = styled.section`
+const StControls = styled.section<{ isActive?: boolean }>`
   display: flex;
+  border: 2px solid ${({ isActive }) => (isActive ? "green" : "transparent")};
+  padding: 5px;
 `;
 
 const StLeft = styled.section``;
@@ -34,42 +36,28 @@ function CatStory(props: CatStoryProps) {
     { type: "bankNote", fill: "red" },
   ]);
 
-  const setColor = useCallback(
-    (index: number, fill: string) => {
-      if (patterns[index].fill !== fill) {
-        const newPatterns = [...patterns];
-        newPatterns[index] = {
-          ...newPatterns[index],
-          fill,
-        };
-        setPatterns(newPatterns);
-      }
-    },
-    [patterns]
-  );
-
-  const setPatternType = useCallback(
-    (index: number, type: PatternType) => {
-      if (patterns[index].type !== type) {
-        const newPatterns = [...patterns];
-        newPatterns[index] = {
-          ...newPatterns[index],
-          type,
-        };
-        setPatterns(newPatterns);
-      }
-    },
-    [patterns]
-  );
-
   return (
     <StContainer>
       <StLeft>
         <h3>Available Patterns - take a look below</h3>
 
         {patterns.map(({ type, fill }, index) => (
-          <StControls key={index}>
-            <ColorPatternPicker />
+          <StControls
+            key={index}
+            onClick={() => setCurrentPatternIndex(index)}
+            isActive={currentPatternIndex === index}
+          >
+            <ColorPatternPicker
+              color={fill}
+              patternType={type}
+              onChange={({ type, fill }) => {
+                setPatterns((prev) => {
+                  const newPatterns = [...prev];
+                  newPatterns[index] = { type, fill };
+                  return newPatterns;
+                });
+              }}
+            />
           </StControls>
         ))}
         <button

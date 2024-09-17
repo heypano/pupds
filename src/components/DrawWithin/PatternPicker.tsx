@@ -29,7 +29,8 @@ const StPatternPreviewContainer = styled.section<{ selected: boolean }>`
     width: ${mobilePatternSize}px;
     height: ${mobilePatternSize}px;
   }
-  border: 1px solid ${({ selected }) => (selected ? "green" : "transparent")};
+  border: 2px solid ${({ selected }) => (selected ? "green" : "transparent")};
+  padding: 5px;
 
   &:hover {
     filter: invert(0.5);
