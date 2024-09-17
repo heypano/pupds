@@ -5,9 +5,16 @@ import PatternPreview from "./PatternPreview";
 import { Patterns, PatternWithFill } from "./patterns/Patterns";
 
 const StPatternPickerContainer = styled.section`
-  display: flex;
-  overflow: auto;
-  gap: 10px;
+  display: grid;
+  grid-auto-flow: column; /* places items in a row */
+  grid-gap: 10px; /* space between items */
+  overflow-x: auto; /* allow horizontal scrolling */
+  white-space: nowrap; /* prevent wrapping to the next line */
+  align-items: flex-start;
+  justify-content: flex-start;
+  @media (max-width: 768px) {
+    grid-template-rows: repeat(2, 1fr); /* two rows */
+  }
 `;
 
 const desktopPatternSize = 150;
@@ -35,19 +42,21 @@ const StPatternPreviewContainer = styled.section<{ selected: boolean }>`
 type PatternPickerProps = {
   selectedPattern?: PatternType;
   onSelect: (patternType: PatternType) => void;
+  fill?: string;
 };
 
 export function PatternPicker({
   onSelect,
   selectedPattern,
+  fill = "#000",
 }: PatternPickerProps) {
   const patternBase = "pattern_preview";
   const patternsWithFill = useMemo<PatternWithFill[]>(
     () =>
       Object.entries(patternMap).map(([key, patternData]) => {
-        return { type: key, fill: "#000" };
+        return { type: key, fill };
       }),
-    []
+    [fill]
   );
   return (
     <>

@@ -23,6 +23,7 @@ const CustomCirclePointer = styled.div<{ direction?: "vertical" }>`
   --size: 15px;
   height: ${circleSize};
   width: ${circleSize};
+  transform: translateX(-50%) translateY(-50%);
   border-radius: 50%;
   background-color: white;
   box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
