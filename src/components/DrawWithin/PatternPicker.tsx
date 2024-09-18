@@ -5,22 +5,23 @@ import PatternPreview from "./PatternPreview";
 import { PatternsDefs, PatternWithFill } from "./patterns/PatternsDefs";
 import { v4 as uuid } from "uuid";
 
+const desktopPatternSize = 150;
+const mobilePatternSize = 100;
 const StPatternPickerContainer = styled.section`
   display: grid;
-  grid-auto-flow: column; /* places items in a row */
+  grid-auto-flow: row; /* places items in 3 columns */
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(${desktopPatternSize}px, 1fr)
+  );
   grid-gap: 10px; /* space between items */
   overflow-x: auto; /* allow horizontal scrolling */
   overflow-y: hidden; /* hide vertical scrollbar */
   white-space: nowrap; /* prevent wrapping to the next line */
   align-items: flex-start;
   justify-content: flex-start;
-  @media (max-width: 768px) {
-    grid-template-rows: repeat(2, 1fr); /* two rows */
-  }
 `;
 
-const desktopPatternSize = 150;
-const mobilePatternSize = 100;
 const StPatternPreviewContainer = styled.section<{ selected: boolean }>`
   display: flex;
   flex-shrink: 0;
