@@ -5,14 +5,14 @@ import PatternPreview from "./PatternPreview";
 import { PatternsDefs, PatternWithFill } from "./patterns/PatternsDefs";
 import { v4 as uuid } from "uuid";
 
-const desktopPatternSize = 150;
-const mobilePatternSize = 100;
+const desktopPatternHeight = 150;
+const mobilePatternHeight = 100;
 const StPatternPickerContainer = styled.section`
   display: grid;
   grid-auto-flow: row; /* places items in 3 columns */
   grid-template-columns: repeat(
     auto-fill,
-    minmax(${desktopPatternSize}px, 1fr)
+    minmax(${desktopPatternHeight}px, 1fr)
   );
   grid-gap: 10px; /* space between items */
   overflow-x: auto; /* allow horizontal scrolling */
@@ -25,11 +25,10 @@ const StPatternPickerContainer = styled.section`
 const StPatternPreviewContainer = styled.section<{ selected: boolean }>`
   display: flex;
   flex-shrink: 0;
-  width: ${desktopPatternSize}px;
-  height: ${desktopPatternSize}px;
+  width: 100%;
+  height: ${desktopPatternHeight}px;
   @media (max-width: 768px) {
-    width: ${mobilePatternSize}px;
-    height: ${mobilePatternSize}px;
+    height: ${mobilePatternHeight}px;
   }
   border: 2px solid ${({ selected }) => (selected ? "green" : "transparent")};
   padding: 5px;
