@@ -24,6 +24,11 @@ const meta: Meta<typeof PatternPreview> = {
     patternIndex: {
       control: "number",
     },
+    patternIdBase: {
+      control: {
+        type: "text",
+      },
+    },
     children: {
       control: {
         type: "text",
@@ -38,9 +43,9 @@ const meta: Meta<typeof PatternPreview> = {
 // Define a Template for your story
 const Template = ({
   patternIndex: propPatternIndex,
+  patternIdBase: patternBase = "pattern_preview",
   children: propChildren,
 }: React.ComponentProps<typeof PatternPreview>) => {
-  const patternBase = useMemo(() => `pattern_preview_${uuid()}`, []);
   const patternsWithFill = useMemo<PatternWithFill[]>(() => {
     return Object.entries(patternMap).map(([key, patternData]) => {
       const fill = `hsl(${Math.random() * 360}, 50%, 50%)`;
