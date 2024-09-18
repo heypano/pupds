@@ -10,6 +10,8 @@ const StContainer = styled.section`
   cursor: pointer;
   position: relative;
   width: 100%;
+  height: 100%;
+  overflow: auto;
   &,
   * {
     box-sizing: border-box;
