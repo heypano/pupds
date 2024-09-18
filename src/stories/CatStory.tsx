@@ -4,7 +4,7 @@ import { CatMaskPaths, CatPaths } from "../components/DrawWithin/cat/paths";
 import styled from "styled-components";
 import exportAsImage from "../lib/exportAsImage";
 import ColorPatternPicker from "../components/DrawWithin/ColorPatternPicker";
-import { PatternWithFill } from "../components/DrawWithin/patterns/Patterns";
+import { PatternWithFill } from "../components/DrawWithin/patterns/PatternsDefs";
 import { DrawWithinProps } from "../components/DrawWithin/DrawWithin";
 
 type CatStoryProps = Partial<DrawWithinProps>;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { PropsWithChildren } from "react";
 import styled from "styled-components";
 import { PatternType } from "./patterns/data";
 
@@ -16,25 +16,35 @@ const StPreview = styled.section`
   }
 `;
 
+const StForeignObjectContent = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+`;
+
 type PatternPreviewProps = {
   patternIdBase: string;
   patternIndex: number;
   onClick?: (patternType: PatternType) => void;
+  defs?: React.ReactNode;
 };
 
-export const PatternPreview: React.FC<PatternPreviewProps> = ({
-  patternIdBase,
-  patternIndex,
-  onClick,
-}) => {
+export const PatternPreview: React.FC<
+  PropsWithChildren<PatternPreviewProps>
+> = ({ patternIdBase, patternIndex, onClick, defs, children }) => {
   return (
     <StPreview onClick={() => onClick?.(patternIndex)}>
       <svg>
+        {defs}
         <rect
           fill={`url(#${patternIdBase}_${patternIndex})`}
           width="100%"
           height="100%"
-        ></rect>
+        />
+        <foreignObject x="0" y="0" width="100%" height="100%">
+          <StForeignObjectContent>{children}</StForeignObjectContent>
+        </foreignObject>
       </svg>
     </StPreview>
   );

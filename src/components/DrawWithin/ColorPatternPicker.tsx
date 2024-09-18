@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Color, ColorResult, HSLColor } from "react-color";
 import ColorPicker from "./ColorPicker";
 import { PatternType } from "./patterns/data";
-import { PatternWithFill } from "./patterns/Patterns";
+import { PatternWithFill } from "./patterns/PatternsDefs";
 import PatternPicker from "./PatternPicker";
 
 const StContainer = styled.section`

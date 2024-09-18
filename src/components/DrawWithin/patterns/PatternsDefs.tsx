@@ -10,7 +10,7 @@ interface PatternProps {
   patternIdBase?: string;
 }
 
-export function Patterns(props: PatternProps) {
+export function PatternsDefs(props: PatternProps) {
   const { patterns, patternIdBase } = props;
 
   return (
@@ -36,4 +36,4 @@ export function Patterns(props: PatternProps) {
   );
 }
 
-export default Patterns;
+export default PatternsDefs;

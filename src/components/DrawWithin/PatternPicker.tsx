@@ -2,7 +2,7 @@ import styled from "styled-components";
 import React, { useMemo } from "react";
 import { patternMap, PatternType } from "./patterns/data";
 import PatternPreview from "./PatternPreview";
-import { Patterns, PatternWithFill } from "./patterns/Patterns";
+import { PatternsDefs, PatternWithFill } from "./patterns/PatternsDefs";
 import { v4 as uuid } from "uuid";
 
 const StPatternPickerContainer = styled.section`
@@ -64,7 +64,7 @@ export function PatternPicker({
   return (
     <>
       <svg style={{ width: 0, height: 0 }}>
-        <Patterns patterns={patternsWithFill} patternIdBase={patternBase} />
+        <PatternsDefs patterns={patternsWithFill} patternIdBase={patternBase} />
       </svg>
       <StPatternPickerContainer>
         {Object.keys(patternMap).map((key, index) => {

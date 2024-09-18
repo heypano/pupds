@@ -3,7 +3,7 @@ import { v4 as uuid } from "uuid";
 import { Path, useCursor } from "../Scratch/UseCursor";
 import { getPathFromPoints } from "../../util/svg";
 import styled from "styled-components";
-import Patterns, { PatternWithFill } from "./patterns/Patterns";
+import PatternsDefs, { PatternWithFill } from "./patterns/PatternsDefs";
 
 const StSvg = styled.svg`
   height: 100%;
@@ -82,7 +82,7 @@ const DrawWithin = forwardRef<HTMLElement | null, DrawWithinProps>(
           ref={ref}
           height="100%"
         >
-          <Patterns patterns={patterns} patternIdBase={patternIdBase} />
+          <PatternsDefs patterns={patterns} patternIdBase={patternIdBase} />
           <g clipPath={`url(#${clipPathId})`} fill="none">
             {allPaths.map(({ path, pathOptions }, index) => {
               const { patternIndex, strokeColor } = pathOptions;

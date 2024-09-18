@@ -10,10 +10,6 @@ export interface PatternData {
   Content: PatternContent;
 }
 
-export interface PatternMap {
-  [patternName: string]: PatternData;
-}
-
 export const patternMap: PatternMap = {
   solid: {
     width: 1,
@@ -96,3 +92,7 @@ export const patternMap: PatternMap = {
 };
 
 export type PatternType = keyof typeof patternMap;
+
+export interface PatternMap {
+  [patternName: string]: PatternData;
+}
