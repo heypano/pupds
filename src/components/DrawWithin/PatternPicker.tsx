@@ -9,15 +9,14 @@ const desktopPatternHeight = 150;
 const mobilePatternHeight = 100;
 const StPatternPickerContainer = styled.section`
   display: grid;
-  grid-auto-flow: row; /* places items in 3 columns */
+  grid-auto-flow: row;
   grid-template-columns: repeat(
     auto-fill,
     minmax(${desktopPatternHeight}px, 1fr)
   );
-  grid-gap: 10px; /* space between items */
-  overflow-x: auto; /* allow horizontal scrolling */
-  overflow-y: hidden; /* hide vertical scrollbar */
-  white-space: nowrap; /* prevent wrapping to the next line */
+  grid-gap: 10px;
+  overflow: auto;
+  white-space: nowrap;
   align-items: flex-start;
   justify-content: flex-start;
 `;
