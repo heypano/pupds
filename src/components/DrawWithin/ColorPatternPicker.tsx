@@ -16,10 +16,10 @@ const StContainer = styled.section`
   }
 `;
 
-type ColorPatternPickerProps<T extends PatternWithFill = PatternWithFill> = {
+type ColorPatternPickerProps = {
   color: string;
   patternType: PatternType;
-  onChange: (patternWithFill: T) => void;
+  onChange: (patternWithFill: PatternWithFill) => void;
 };
 
 const hslToCss = ({ h, s, l, a }: HSLColor): string => {
