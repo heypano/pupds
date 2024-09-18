@@ -16,6 +16,7 @@ const StPatternPickerContainer = styled.section`
   );
   grid-gap: 10px;
   overflow: auto;
+  user-select: none;
   white-space: nowrap;
   align-items: flex-start;
   justify-content: flex-start;

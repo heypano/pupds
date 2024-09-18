@@ -12,6 +12,7 @@ const StContainer = styled.section`
   width: 100%;
   height: 100%;
   overflow: auto;
+  user-select: none;
   &,
   * {
     box-sizing: border-box;
