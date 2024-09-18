@@ -35,16 +35,18 @@ export const PatternPreview: React.FC<
 > = ({ patternIdBase, patternIndex, onClick, defs, children }) => {
   return (
     <StPreview onClick={() => onClick?.(patternIndex)}>
-      <svg>
+      <svg xmlns="http://www.w3.org/2000/svg">
         {defs}
         <rect
           fill={`url(#${patternIdBase}_${patternIndex})`}
           width="100%"
           height="100%"
         />
-        <foreignObject x="0" y="0" width="100%" height="100%">
-          <StForeignObjectContent>{children}</StForeignObjectContent>
-        </foreignObject>
+        {children && (
+          <foreignObject x="0" y="0" width="100%" height="100%">
+            <StForeignObjectContent>{children}</StForeignObjectContent>
+          </foreignObject>
+        )}
       </svg>
     </StPreview>
   );
