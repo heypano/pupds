@@ -4,10 +4,13 @@ import { PatternType } from "./patterns/data";
 
 const StPreview = styled.section`
   cursor: pointer;
-
   position: relative;
   width: 100%;
   height: 100%;
+  display: grid;
+  align-items: center;
+  justify-content: center;
+
   &:hover {
     filter: brightness(1.1);
   }
