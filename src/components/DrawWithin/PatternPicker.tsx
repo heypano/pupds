@@ -4,6 +4,7 @@ import { patternMap, PatternType } from "./patterns/data";
 import PatternPreview from "./PatternPreview";
 import { PatternsDefs, PatternWithFill } from "./patterns/PatternsDefs";
 import { v4 as uuid } from "uuid";
+import { PropsWithClassName } from "../../lib";
 
 const desktopPatternHeight = 150;
 const mobilePatternHeight = 100;
@@ -52,7 +53,8 @@ export function PatternPicker({
   onSelect,
   selectedPattern,
   fill = "#000",
-}: PatternPickerProps) {
+  className,
+}: PropsWithClassName<PatternPickerProps>) {
   const patternBase = useMemo(() => `pattern_preview_${uuid()}`, []);
   const patternsWithFill = useMemo<PatternWithFill[]>(
     () =>
@@ -62,29 +64,24 @@ export function PatternPicker({
     [fill]
   );
   return (
-    <>
+    <StPatternPickerContainer className={className}>
       <svg style={{ width: 0, height: 0 }}>
         <PatternsDefs patterns={patternsWithFill} patternIdBase={patternBase} />
       </svg>
-      <StPatternPickerContainer>
-        {Object.keys(patternMap).map((key, index) => {
-          return (
-            <StPatternPreviewContainer
-              key={index}
-              selected={selectedPattern === key}
-              onClick={() => {
-                onSelect(key as PatternType);
-              }}
-            >
-              <PatternPreview
-                patternIdBase={patternBase}
-                patternIndex={index}
-              />
-            </StPatternPreviewContainer>
-          );
-        })}
-      </StPatternPickerContainer>
-    </>
+      {Object.keys(patternMap).map((key, index) => {
+        return (
+          <StPatternPreviewContainer
+            key={index}
+            selected={selectedPattern === key}
+            onClick={() => {
+              onSelect(key as PatternType);
+            }}
+          >
+            <PatternPreview patternIdBase={patternBase} patternIndex={index} />
+          </StPatternPreviewContainer>
+        );
+      })}
+    </StPatternPickerContainer>
   );
 }
 

@@ -1,6 +1,7 @@
 import React, { PropsWithChildren } from "react";
 import styled from "styled-components";
 import { PatternType } from "./patterns/data";
+import { PropsWithClassName } from "../../lib";
 
 const StPreview = styled.section`
   cursor: pointer;
@@ -34,10 +35,10 @@ type PatternPreviewProps = {
 };
 
 export const PatternPreview: React.FC<
-  PropsWithChildren<PatternPreviewProps>
-> = ({ patternIdBase, patternIndex, onClick, defs, children }) => {
+  PropsWithChildren<PropsWithClassName<PatternPreviewProps>>
+> = ({ patternIdBase, patternIndex, onClick, defs, children, className }) => {
   return (
-    <StPreview onClick={() => onClick?.(patternIndex)}>
+    <StPreview onClick={() => onClick?.(patternIndex)} className={className}>
       <svg xmlns="http://www.w3.org/2000/svg">
         {defs}
         <rect

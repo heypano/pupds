@@ -3,6 +3,7 @@ import { useCursor } from "./UseCursor";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 import { getPathFromPoints } from "../../util/svg";
+import { PropsWithClassName } from "../../lib";
 
 const strokeWidth = (1.3 * window.innerHeight) / 9;
 
@@ -31,8 +32,12 @@ const StButton = styled.span`
   }
 `;
 
-function Scratch(props: ScratchProps) {
-  const { text = "", drawText, showClearButton } = props;
+function Scratch({
+  text = "",
+  drawText,
+  showClearButton,
+  className,
+}: PropsWithClassName<ScratchProps>) {
   const maskId = useMemo(() => uuidv4(), []);
   const pathId = useMemo(() => uuidv4(), []);
   const { paths, ref, clearPoints } = useCursor();
@@ -42,7 +47,7 @@ function Scratch(props: ScratchProps) {
   const path = allPaths[0];
 
   return (
-    <SvgContainer>
+    <SvgContainer className={className}>
       {showClearButton && (
         <StButton
           role="button"

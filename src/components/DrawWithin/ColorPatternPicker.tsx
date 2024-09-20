@@ -5,6 +5,7 @@ import ColorPicker from "./ColorPicker";
 import { PatternType } from "./patterns/data";
 import { PatternWithFill } from "./patterns/PatternsDefs";
 import PatternPicker from "./PatternPicker";
+import { PropsWithClassName } from "../../lib";
 
 const StContainer = styled.section`
   cursor: pointer;
@@ -37,9 +38,10 @@ export function ColorPatternPicker({
   color,
   patternType,
   onChange,
-}: ColorPatternPickerProps) {
+  className,
+}: PropsWithClassName<ColorPatternPickerProps>) {
   return (
-    <StContainer>
+    <StContainer className={className}>
       <ColorPicker
         color={color}
         onChange={(colorResult) => {
