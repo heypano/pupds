@@ -49,6 +49,11 @@ function cursorReducer(
         ...state,
         paths: [...state.paths, { points: [], pathOptions }],
       };
+    case "removeLastPath":
+      return {
+        ...state,
+        paths: state.paths.slice(0, state.paths.length - 1),
+      };
     case "addPoint":
       const lastPath = state.paths[state.paths.length - 1];
       const allButLast = state.paths.slice(0, state.paths.length - 1);
@@ -87,6 +92,11 @@ export function useCursor(args: useCursorArgs = {}) {
       type: "addPath",
       payload: { pathOptions: options },
     };
+    pointsDispatch(action);
+  }, []);
+
+  const removeLastPath = useCallback(() => {
+    const action: Action = { type: "removeLastPath" };
     pointsDispatch(action);
   }, []);
 
@@ -166,5 +176,11 @@ export function useCursor(args: useCursorArgs = {}) {
     };
   }, [draw, startDrawing, stopDrawing]);
 
-  return { paths: state.paths, addPoint, ref: nodeRef, clearPoints };
+  return {
+    paths: state.paths,
+    addPoint,
+    removeLastPath,
+    ref: nodeRef,
+    clearPoints,
+  };
 }

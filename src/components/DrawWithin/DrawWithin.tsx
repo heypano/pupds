@@ -31,7 +31,11 @@ export interface DrawWithinProps {
   patternIdBase: string;
 }
 
-const DrawWithin = forwardRef<HTMLElement | null, DrawWithinProps>(
+type DrawWithinRef = {
+  removeLastPath: () => void;
+};
+
+const DrawWithin = forwardRef<DrawWithinRef, DrawWithinProps>(
   (props, forwardedRef) => {
     const {
       strokeWidth = 6,
@@ -46,10 +50,20 @@ const DrawWithin = forwardRef<HTMLElement | null, DrawWithinProps>(
     } = props;
     const clipPathId = useMemo(() => uuid(), []);
     const pathId = useMemo(() => uuid(), []);
-    const { paths, ref } = useCursor({
+    const { paths, ref, removeLastPath } = useCursor({
       generateMultiplePaths: true,
       pathOptions: { strokeColor, patternIndex },
     });
+    const refResult: DrawWithinRef = { removeLastPath };
+
+    if (forwardedRef) {
+      if (typeof forwardedRef === "function") {
+        forwardedRef(refResult);
+      } else {
+        forwardedRef.current = refResult;
+      }
+    }
+
     // TODO add custom cursor that reflects selected pattern and brush size
     const allPaths = useMemo(
       () =>
@@ -64,18 +78,7 @@ const DrawWithin = forwardRef<HTMLElement | null, DrawWithinProps>(
     );
 
     return (
-      <StContainer
-        className={className}
-        ref={(r) => {
-          if (forwardedRef) {
-            if (typeof forwardedRef === "function") {
-              forwardedRef(r);
-            } else {
-              forwardedRef.current = r;
-            }
-          }
-        }}
-      >
+      <StContainer className={className}>
         <StSvg
           xmlns="http://www.w3.org/2000/svg"
           viewBox={viewBox}

@@ -15,7 +15,12 @@ const StContainer = styled.section`
 `;
 
 const StDrawWithin = styled(DrawWithin)`
+  align-items: start;
   padding: 10px;
+  svg {
+    width: 100%;
+    height: auto;
+  }
 `;
 
 const StControls = styled.section<{ isActive?: boolean }>`
@@ -77,9 +82,8 @@ function CatStory(props: CatStoryProps) {
           Save
         </button>
       </StLeft>
-      <StRight>
+      <StRight ref={ref}>
         <StDrawWithin
-          ref={ref}
           patternIdBase="pattern"
           patternIndex={currentPatternIndex}
           viewBox="0 0 202.53 230.74"
