@@ -17,7 +17,10 @@ const exportAsImage = async (args: ExportAsImageArgs) => {
     element.style.height = `${height}px`;
   }
 
-  const canvas = await html2canvas(element);
+  const canvas = await html2canvas(element, {
+    windowHeight: height,
+    windowWidth: width,
+  });
   const image = canvas.toDataURL("image/png", 1.0);
   downloadImage(image, imageFileName);
   if (width) {
