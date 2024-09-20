@@ -5,9 +5,15 @@ export interface ExportAsImageArgs {
   imageFileName: string;
   width?: number;
   height?: number;
+  htmlCanvasOptions?: Parameters<typeof html2canvas>[1];
 }
-const exportAsImage = async (args: ExportAsImageArgs) => {
-  const { element, imageFileName, width, height } = args;
+const exportAsImage = async ({
+  element,
+  imageFileName,
+  width,
+  height,
+  htmlCanvasOptions,
+}: ExportAsImageArgs) => {
   const oldHeight = element.style.height;
   const oldWidth = element.style.width;
   if (width) {
@@ -17,10 +23,7 @@ const exportAsImage = async (args: ExportAsImageArgs) => {
     element.style.height = `${height}px`;
   }
 
-  const canvas = await html2canvas(element, {
-    windowHeight: height,
-    windowWidth: width,
-  });
+  const canvas = await html2canvas(element, htmlCanvasOptions);
   const image = canvas.toDataURL("image/png", 1.0);
   downloadImage(image, imageFileName);
   if (width) {
