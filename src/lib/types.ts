@@ -1,1 +1,3 @@
-export type PropsWithClassName<T = {}> = T & { className?: string };
+export type PropsWithClassName<T = Record<string, never>> = T & {
+  className?: string;
+};
