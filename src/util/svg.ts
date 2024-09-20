@@ -7,9 +7,10 @@ export function getPointInSvgFromEvent(
   let x: number;
   let y: number;
   if (window.TouchEvent && event instanceof TouchEvent) {
-    const { touches } = event as TouchEvent;
-    x = touches[0]?.clientX;
-    y = touches[0]?.clientY;
+    const { touches, changedTouches } = event as TouchEvent;
+    const touchesSource = touches.length ? touches : changedTouches;
+    x = touchesSource[0]?.clientX;
+    y = touchesSource[0]?.clientY;
   } else {
     const { clientX, clientY } = event as MouseEvent;
     x = clientX;

@@ -92,6 +92,7 @@ export function useCursor(args: useCursorArgs = {}) {
       type: "addPath",
       payload: { pathOptions: options },
     };
+    console.log("addPath", options);
     pointsDispatch(action);
   }, []);
 
@@ -102,6 +103,7 @@ export function useCursor(args: useCursorArgs = {}) {
 
   const addPoint = useCallback((point: Point) => {
     const action: Action = { type: "addPoint", payload: point };
+    console.log("addPoint", point);
     pointsDispatch(action);
   }, []);
 
