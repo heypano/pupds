@@ -8,6 +8,7 @@ import styled from "styled-components";
 import exportAsImage from "../lib/exportAsImage";
 import ColorPatternPicker from "../components/DrawWithin/ColorPatternPicker";
 import { PatternWithFill } from "../components/DrawWithin/assets/patterns/PatternsDefs";
+import { StSvg } from "../components/DrawWithin/DrawWithin";
 
 type CatStoryProps = Partial<ComponentProps<typeof DrawWithin>>;
 
@@ -19,7 +20,8 @@ const StContainer = styled.section`
 const StDrawWithin = styled(DrawWithin)`
   align-items: start;
   padding: 10px;
-  svg {
+  height: auto;
+  ${StSvg} {
     width: 100%;
     height: auto;
   }
