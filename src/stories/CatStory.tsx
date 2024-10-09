@@ -1,10 +1,13 @@
 import { DrawWithin, PatternType } from "../components";
 import React, { ComponentProps, useCallback, useRef, useState } from "react";
-import { CatMaskPaths, CatPaths } from "../components/DrawWithin/cat/paths";
+import {
+  CatMaskPaths,
+  CatPaths,
+} from "../components/DrawWithin/assets/cat/paths";
 import styled from "styled-components";
 import exportAsImage from "../lib/exportAsImage";
 import ColorPatternPicker from "../components/DrawWithin/ColorPatternPicker";
-import { PatternWithFill } from "../components/DrawWithin/patterns/PatternsDefs";
+import { PatternWithFill } from "../components/DrawWithin/assets/patterns/PatternsDefs";
 
 type CatStoryProps = Partial<ComponentProps<typeof DrawWithin>>;
 

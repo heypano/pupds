@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import React, { useMemo } from "react";
-import { patternMap, PatternType } from "./patterns/data";
+import { patternMap, PatternType } from "./assets/patterns/data";
 import PatternPreview from "./PatternPreview";
-import { PatternsDefs, PatternWithFill } from "./patterns/PatternsDefs";
+import { PatternsDefs, PatternWithFill } from "./assets/patterns/PatternsDefs";
 import { v4 as uuid } from "uuid";
 import { PropsWithClassName } from "../../lib";
 

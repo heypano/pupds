@@ -3,7 +3,7 @@ import { v4 as uuid } from "uuid";
 import { Path, useCursor } from "../Scratch/UseCursor";
 import { getPathFromPoints } from "../../util/svg";
 import styled from "styled-components";
-import PatternsDefs, { PatternWithFill } from "./patterns/PatternsDefs";
+import PatternsDefs, { PatternWithFill } from "./assets/patterns/PatternsDefs";
 import { PropsWithClassName } from "../../lib";
 
 const StSvg = styled.svg`

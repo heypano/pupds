@@ -1,6 +1,6 @@
 import React, { PropsWithChildren } from "react";
 import styled from "styled-components";
-import { PatternType } from "./patterns/data";
+import { PatternType } from "./assets/patterns/data";
 import { PropsWithClassName } from "../../lib";
 
 const StPreview = styled.section`

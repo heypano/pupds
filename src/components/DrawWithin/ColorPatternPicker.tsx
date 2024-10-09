@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Color, ColorResult, HSLColor } from "react-color";
 import ColorPicker from "./ColorPicker";
-import { PatternType } from "./patterns/data";
-import { PatternWithFill } from "./patterns/PatternsDefs";
+import { PatternType } from "./assets/patterns/data";
+import { PatternWithFill } from "./assets/patterns/PatternsDefs";
 import PatternPicker from "./PatternPicker";
 import { PropsWithClassName } from "../../lib";
 

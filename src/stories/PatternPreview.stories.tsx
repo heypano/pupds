@@ -3,7 +3,7 @@ import { patternMap, PatternPreview, PatternType } from "../components";
 import React, { useEffect, useMemo, useState } from "react";
 import PatternsDefs, {
   PatternWithFill,
-} from "../components/DrawWithin/patterns/PatternsDefs";
+} from "../components/DrawWithin/assets/patterns/PatternsDefs";
 import { v4 as uuid } from "uuid";
 import styled from "styled-components";
 
