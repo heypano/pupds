@@ -6,19 +6,19 @@ export const brushMove = keyframes`
     transform: translate(0%, 0%);
   }
   20% {
-    transform: translate(100%, 100%);
+    transform: translate(-30%, -30%);
   }
   40% {
-    transform: translate(100%, 0%);
+    transform: translate(0%, 0%);
   }
   60% {
-    transform: translate(200%, 100%);
+    transform: translate(-30%, -30%);
   }
   80% {
-    transform: translate(200%, 0%);
+    transform: translate(0%, 0%);
   }
   100% {
-    transform: translate(300%, 100%);
+    transform: translate(-30%, -30%);
     opacity: 0; /* Fade out at the end */
   }
 `;
